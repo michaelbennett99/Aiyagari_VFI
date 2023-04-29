@@ -43,7 +43,7 @@ function flow_value(
     if c < 0 || s < 0 || s > 1
         return -Inf
     end
-    return (1/(1-θ)) * c^(1 - θ) + γ * (ε/(1+ε)) * l^((1+ε)/ε)
+    return u_c_l(c, l, θ, γ, ε)
 end
 
 function calculate_emp_process(λ_f::Real, λ_l::Real)
@@ -110,7 +110,7 @@ function do_VFI(
 
     println("Making flow value matrix ...")
 
-    flow_value_mat = make_flow_value_mat(
+    return make_flow_value_mat(
         flow_value, h_grid, a_grid, e_grid, hp_grid, ap_grid; kwargs...
     )
 
