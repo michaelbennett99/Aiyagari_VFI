@@ -76,8 +76,9 @@ function make_flow_value_mat(
     flow_value_mat = Array{Float64}(undef, h_N, a_N, e_N, hp_N, ap_N)
     Threads.@threads for i_h ∈ 1:h_N
         for i_a ∈ 1:a_N, i_e ∈ 1:e_N, i_hp ∈ 1:hp_N, i_ap ∈ 1:ap_N
-            @views flow_value_mat[i_h, i_a, i_e, i_hp, i_ap] = flow_value_spec(
-                h_grid[i_h], hp_grid[i_hp], a_grid[i_a], ap_grid[i_ap], e_grid[i_e]
+            flow_value_mat[i_h, i_a, i_e, i_hp, i_ap] = flow_value_spec(
+                h_grid[i_h], hp_grid[i_hp], a_grid[i_a], ap_grid[i_ap],
+                e_grid[i_e]
             )
         end
     end

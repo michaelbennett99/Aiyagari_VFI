@@ -1,277 +1,199 @@
 <?xml version="1.0" standalone="no"?>
 <!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
-<svg version="1.1" width="960" height="451" viewBox="0 0 960 451"
-     xmlns="http://www.w3.org/2000/svg" id="fig-1ddb37643ce44754ba306e44e0c8539e">
+<svg version="1.1" width="960" height="436" viewBox="0 0 960 436"
+     xmlns="http://www.w3.org/2000/svg" id="fig-85cc9edac4d0446696743e64962f7d4c">
 <defs>
-    <clipPath id="fig-1ddb37643ce44754ba306e44e0c8539e-clip">
-        <rect x="0" y="0" width="960" height="451"/>
+    <clipPath id="fig-85cc9edac4d0446696743e64962f7d4c-clip">
+        <rect x="0" y="0" width="960" height="436"/>
     </clipPath>
 </defs>
 <style type="text/css">
-    #fig-1ddb37643ce44754ba306e44e0c8539e text {
+    #fig-85cc9edac4d0446696743e64962f7d4c text {
         pointer-events: none;
         font-family: inherit;
         font-size: 12px;
         fill: #000000;
     }
-    text#fig-1ddb37643ce44754ba306e44e0c8539e-caption {
+    text#fig-85cc9edac4d0446696743e64962f7d4c-caption {
         font-size: 16.8px;
         fill: #000000;
         text-anchor: middle;
     }
-    #fig-1ddb37643ce44754ba306e44e0c8539e-bg {
+    #fig-85cc9edac4d0446696743e64962f7d4c-bg {
         fill: #FFFFFF;
     }
-    #fig-1ddb37643ce44754ba306e44e0c8539e-viewport rect, #fig-1ddb37643ce44754ba306e44e0c8539e-viewport path {
+    #fig-85cc9edac4d0446696743e64962f7d4c-viewport rect, #fig-85cc9edac4d0446696743e64962f7d4c-viewport path {
         vector-effect: non-scaling-stroke;
         fill-opacity: 1;
     }
-    #fig-1ddb37643ce44754ba306e44e0c8539e-viewport text {
+    #fig-85cc9edac4d0446696743e64962f7d4c-viewport text {
         stroke: #000000;
         stroke-width: 0;
         stroke-opacity: 0.35;
     }
-    #fig-1ddb37643ce44754ba306e44e0c8539e-viewport rect:hover, #fig-1ddb37643ce44754ba306e44e0c8539e-viewport path:hover {
+    #fig-85cc9edac4d0446696743e64962f7d4c-viewport rect:hover, #fig-85cc9edac4d0446696743e64962f7d4c-viewport path:hover {
         fill-opacity: 0.75;
         stroke: #000000;
         stroke-width: 0.5;
     }
-    #fig-1ddb37643ce44754ba306e44e0c8539e-viewport + rect {
+    #fig-85cc9edac4d0446696743e64962f7d4c-viewport + rect {
         fill: #FFFFFF;
         opacity: 0.8;
     }
-    text#fig-1ddb37643ce44754ba306e44e0c8539e-details{
+    text#fig-85cc9edac4d0446696743e64962f7d4c-details{
         fill: #000000;
     }
 </style>
-<g id="fig-1ddb37643ce44754ba306e44e0c8539e-frame" clip-path="url(#fig-1ddb37643ce44754ba306e44e0c8539e-clip)">
-<rect id="fig-1ddb37643ce44754ba306e44e0c8539e-bg" x="0" y="0" width="960" height="451"/>
-<text id="fig-1ddb37643ce44754ba306e44e0c8539e-caption" x="480" y="24">Profile results</text>
-<g id="fig-1ddb37643ce44754ba306e44e0c8539e-viewport" transform="scale(1)">
-<rect x="10" y="398" width="940.65" height="15" rx="2" fill="#F3004D" data-dinfo=""/>
-<text x="10" dx="4" y="409.25"> in :-1</text>
-<rect x="63.71" y="383" width="3.87" height="15" rx="2" fill="#00B58B" data-dinfo="./"/>
-<text x="63.71" dx="4" y="394.25">#15 in task.jl:484</text>
-<rect x="63.71" y="368" width="3.87" height="15" rx="2" fill="#E1B2FF" data-dinfo="/Users/michaelbennett/.julia/packages/IJulia/6TIq1/src/"/>
-<text x="63.71" dx="4" y="379.25">eventloop in eventloop.jl:8</text>
-<rect x="63.71" y="353" width="3.87" height="15" rx="2" fill="#00B58B" data-dinfo="./"/>
-<text x="63.71" dx="4" y="364.25">invokelatest in essentials.jl:726</text>
-<rect x="63.71" y="338" width="3.87" height="15" rx="2" fill="#F3004D" data-dinfo="./"/>
-<text x="63.71" dx="4" y="349.25">#invokelatest#2 in essentials.jl:729</text>
-<rect x="63.71" y="323" width="3.87" height="15" rx="2" fill="#D42137" data-dinfo="/Users/michaelbennett/.julia/packages/IJulia/6TIq1/src/"/>
-<text x="63.71" dx="4" y="334.25">execute_request in execute_request.jl:67</text>
-<rect x="63.71" y="308" width="3.87" height="15" rx="2" fill="#E1B2FF" data-dinfo="/Users/michaelbennett/.julia/packages/SoftGlobalScope/u4UzH/src/"/>
-<text x="63.71" dx="4" y="319.25">softscope_include_string in SoftGlobalScope.jl:65</text>
-<rect x="63.71" y="293" width="3.87" height="15" rx="2" fill="#00B58B" data-dinfo="./"/>
-<text x="63.71" dx="4" y="304.25">include_string in loading.jl:1428</text>
-<rect x="63.71" y="278" width="3.87" height="15" rx="2" fill="#F3004D" data-dinfo="./"/>
-<text x="63.71" dx="4" y="289.25">eval in boot.jl:368</text>
-<rect x="63.71" y="263" width="3.87" height="15" rx="2" fill="#00B58B" data-dinfo="/Users/michaelbennett/Dropbox/Yale/Year 1/Computational Methods/Project/code/"/>
-<text x="63.71" dx="4" y="274.25">do_VFI##kw in stochastic_employment.jl:99</text>
-<rect x="63.71" y="248" width="2.9" height="15" rx="2" fill="#E1B2FF" data-dinfo="/Users/michaelbennett/Dropbox/Yale/Year 1/Computational Methods/Project/code/"/>
-<text x="63.71" dx="4" y="259.25">#do_VFI#9 in stochastic_employment.jl:133</text>
-<rect x="63.71" y="233" width="2.9" height="15" rx="2" fill="#00B58B" data-dinfo="./"/>
-<text x="63.71" dx="4" y="244.25">macro expansion in threadingconstructs.jl:89</text>
-<rect x="63.71" y="218" width="0.48" height="15" rx="2" fill="#E1B2FF" data-dinfo="./"/>
-<text x="63.71" dx="4" y="229.25">threading_run in threadingconstructs.jl:34</text>
-<rect x="63.71" y="203" width="0.48" height="15" rx="2" fill="#00B58B" data-dinfo="./"/>
-<text x="63.71" dx="4" y="214.25">schedule in task.jl:753</text>
-<rect x="63.71" y="188" width="0.48" height="15" rx="2" fill="#E1B2FF" data-dinfo="./"/>
-<text x="63.71" dx="4" y="199.25">enq_work in task.jl:749</text>
-<rect x="64.19" y="218" width="0.49" height="15" rx="2" fill="#6FDC91" data-dinfo="./"/>
-<text x="64.19" dx="4" y="229.25">threading_run in threadingconstructs.jl:38</text>
-<rect x="64.19" y="203" width="0.49" height="15" rx="2" fill="#2CA3FF" data-dinfo="./"/>
-<text x="64.19" dx="4" y="214.25">wait in task.jl:343</text>
-<rect x="64.19" y="188" width="0.49" height="15" rx="2" fill="#E40041" data-dinfo="./"/>
-<text x="64.19" dx="4" y="199.25">_wait in task.jl:304</text>
-<rect x="64.19" y="173" width="0.49" height="15" rx="2" fill="#00B58B" data-dinfo="./"/>
-<text x="64.19" dx="4" y="184.25">wait in condition.jl:124</text>
-<rect x="64.19" y="158" width="0.49" height="15" rx="2" fill="#E1B2FF" data-dinfo="./"/>
-<text x="64.19" dx="4" y="169.25">wait in task.jl:930</text>
-<rect x="64.19" y="143" width="0.49" height="15" rx="2" fill="#00B58B" data-dinfo="./"/>
-<text x="64.19" dx="4" y="154.25">poptask in task.jl:921</text>
-<rect x="64.68" y="218" width="1.93" height="15" rx="2" fill="#E1B2FF" data-dinfo="./"/>
-<text x="64.68" dx="4" y="229.25">threading_run in threadingconstructs.jl:41</text>
-<rect x="66.61" y="248" width="0.49" height="15" rx="2" fill="#E40041" data-dinfo="/Users/michaelbennett/Dropbox/Yale/Year 1/Computational Methods/Project/code/"/>
-<text x="66.61" dx="4" y="259.25">#do_VFI#9 in stochastic_employment.jl:153</text>
-<rect x="67.1" y="248" width="0.48" height="15" rx="2" fill="#E1B2FF" data-dinfo="/Users/michaelbennett/Dropbox/Yale/Year 1/Computational Methods/Project/code/"/>
-<text x="67.1" dx="4" y="259.25">#do_VFI#9 in stochastic_employment.jl:156</text>
-<rect x="67.1" y="233" width="0.48" height="15" rx="2" fill="#2CA3FF" data-dinfo="./strings/"/>
-<text x="67.1" dx="4" y="244.25">string in io.jl:185</text>
-<rect x="67.1" y="218" width="0.48" height="15" rx="2" fill="#6FDC91" data-dinfo="./strings/"/>
-<text x="67.1" dx="4" y="229.25">print_to_string in io.jl:139</text>
-<rect x="67.1" y="203" width="0.48" height="15" rx="2" fill="#00B58B" data-dinfo="./strings/"/>
-<text x="67.1" dx="4" y="214.25">_str_sizehint in io.jl:125</text>
-<rect x="67.58" y="383" width="0.97" height="15" rx="2" fill="#2CA3FF" data-dinfo="./"/>
-<text x="67.58" dx="4" y="394.25">#666 in task.jl:134</text>
-<rect x="67.58" y="368" width="0.97" height="15" rx="2" fill="#6FDC91" data-dinfo="./"/>
-<text x="67.58" dx="4" y="379.25">macro expansion in asyncevent.jl:281</text>
-<rect x="67.58" y="353" width="0.97" height="15" rx="2" fill="#2CA3FF" data-dinfo="/Users/michaelbennett/.julia/packages/IJulia/6TIq1/src/"/>
-<text x="67.58" dx="4" y="364.25">send_stdout in stdio.jl:124</text>
-<rect x="67.58" y="338" width="0.97" height="15" rx="2" fill="#6FDC91" data-dinfo="/Users/michaelbennett/.julia/packages/IJulia/6TIq1/src/"/>
-<text x="67.58" dx="4" y="349.25">send_stdio in stdio.jl:121</text>
-<rect x="67.58" y="323" width="0.97" height="15" rx="2" fill="#2CA3FF" data-dinfo="/Users/michaelbennett/.julia/packages/IJulia/6TIq1/src/"/>
-<text x="67.58" dx="4" y="334.25">send_stream in stdio.jl:163</text>
-<rect x="67.58" y="308" width="0.48" height="15" rx="2" fill="#6FDC91" data-dinfo="/Users/michaelbennett/.julia/packages/IJulia/6TIq1/src/"/>
-<text x="67.58" dx="4" y="319.25">msg_pub in msg.jl:30</text>
-<rect x="67.58" y="293" width="0.48" height="15" rx="2" fill="#2CA3FF" data-dinfo="/Users/michaelbennett/.julia/packages/IJulia/6TIq1/src/"/>
-<text x="67.58" dx="4" y="304.25">msg_pub in msg.jl:30</text>
-<rect x="67.58" y="278" width="0.48" height="15" rx="2" fill="#6FDC91" data-dinfo="/Users/michaelbennett/.julia/packages/IJulia/6TIq1/src/"/>
-<text x="67.58" dx="4" y="289.25">msg_header in msg.jl:18</text>
-<rect x="67.58" y="263" width="0.48" height="15" rx="2" fill="#2CA3FF" data-dinfo="./"/>
-<text x="67.58" dx="4" y="274.25">Dict in dict.jl:125</text>
-<rect x="68.06" y="308" width="0.49" height="15" rx="2" fill="#F3004D" data-dinfo="/Users/michaelbennett/.julia/packages/IJulia/6TIq1/src/"/>
-<text x="68.06" dx="4" y="319.25">send_ipython in msg.jl:54</text>
-<rect x="68.06" y="293" width="0.49" height="15" rx="2" fill="#00B58B" data-dinfo="/Users/michaelbennett/.julia/packages/JSON/93Ea8/src/"/>
-<text x="68.06" dx="4" y="304.25">json in Writer.jl:399</text>
-<rect x="68.06" y="278" width="0.49" height="15" rx="2" fill="#E1B2FF" data-dinfo="./strings/"/>
-<text x="68.06" dx="4" y="289.25">sprint in io.jl:107</text>
-<rect x="68.06" y="263" width="0.49" height="15" rx="2" fill="#D42137" data-dinfo="./strings/"/>
-<text x="68.06" dx="4" y="274.25">#sprint#452 in io.jl:114</text>
-<rect x="68.06" y="248" width="0.49" height="15" rx="2" fill="#6FDC91" data-dinfo="/Users/michaelbennett/.julia/packages/JSON/93Ea8/src/"/>
-<text x="68.06" dx="4" y="259.25">print in Writer.jl:383</text>
-<rect x="68.06" y="233" width="0.49" height="15" rx="2" fill="#00B58B" data-dinfo="/Users/michaelbennett/.julia/packages/JSON/93Ea8/src/"/>
-<text x="68.06" dx="4" y="244.25">show_json in Writer.jl:357</text>
-<rect x="68.06" y="218" width="0.49" height="15" rx="2" fill="#E1B2FF" data-dinfo="/Users/michaelbennett/.julia/packages/JSON/93Ea8/src/"/>
-<text x="68.06" dx="4" y="229.25">#show_json#9 in Writer.jl:359</text>
-<rect x="68.06" y="203" width="0.49" height="15" rx="2" fill="#2CA3FF" data-dinfo="/Users/michaelbennett/.julia/packages/JSON/93Ea8/src/"/>
-<text x="68.06" dx="4" y="214.25">show_json in Writer.jl:297</text>
-<rect x="68.06" y="188" width="0.49" height="15" rx="2" fill="#E1B2FF" data-dinfo="/Users/michaelbennett/.julia/packages/JSON/93Ea8/src/"/>
-<text x="68.06" dx="4" y="199.25">recursive_cycle_check in Writer.jl:291</text>
-<rect x="68.06" y="173" width="0.49" height="15" rx="2" fill="#2CA3FF" data-dinfo="/Users/michaelbennett/.julia/packages/JSON/93Ea8/src/"/>
-<text x="68.06" dx="4" y="184.25">#1 in Writer.jl:300</text>
-<rect x="68.06" y="158" width="0.49" height="15" rx="2" fill="#6FDC91" data-dinfo="/Users/michaelbennett/.julia/packages/JSON/93Ea8/src/"/>
-<text x="68.06" dx="4" y="169.25">show_pair in Writer.jl:259</text>
-<rect x="68.06" y="143" width="0.49" height="15" rx="2" fill="#2CA3FF" data-dinfo="/Users/michaelbennett/.julia/packages/JSON/93Ea8/src/"/>
-<text x="68.06" dx="4" y="154.25">show_pair in Writer.jl:257</text>
-<rect x="68.06" y="128" width="0.49" height="15" rx="2" fill="#E1B2FF" data-dinfo="/Users/michaelbennett/.julia/packages/JSON/93Ea8/src/"/>
-<text x="68.06" dx="4" y="139.25">show_json in Writer.jl:267</text>
-<rect x="68.06" y="113" width="0.49" height="15" rx="2" fill="#00B58B" data-dinfo="/Users/michaelbennett/.julia/packages/JSON/93Ea8/src/"/>
-<text x="68.06" dx="4" y="124.25">show_string in Writer.jl:214</text>
-<rect x="68.06" y="98" width="0.49" height="15" rx="2" fill="#E1B2FF" data-dinfo="./strings/"/>
-<text x="68.06" dx="4" y="109.25">print in io.jl:246</text>
-<rect x="68.06" y="83" width="0.49" height="15" rx="2" fill="#00B58B" data-dinfo="./strings/"/>
-<text x="68.06" dx="4" y="94.25">write in io.jl:244</text>
-<rect x="68.06" y="68" width="0.49" height="15" rx="2" fill="#E1B2FF" data-dinfo="./"/>
-<text x="68.06" dx="4" y="79.25">unsafe_write in io.jl:293</text>
-<rect x="68.06" y="53" width="0.49" height="15" rx="2" fill="#00B58B" data-dinfo="./"/>
-<text x="68.06" dx="4" y="64.25">iterate in range.jl:883</text>
-<rect x="68.06" y="38" width="0.49" height="15" rx="2" fill="#E1B2FF" data-dinfo="./"/>
-<text x="68.06" dx="4" y="49.25">== in promotion.jl:477</text>
-<rect x="68.55" y="383" width="260.8" height="15" rx="2" fill="#00B58B" data-dinfo="./"/>
-<text x="68.55" dx="4" y="394.25">#1 in threadingconstructs.jl:30</text>
-<rect x="68.55" y="368" width="260.8" height="15" rx="2" fill="#F3004D" data-dinfo="./"/>
-<text x="68.55" dx="4" y="379.25">#55#threadsfor_fun in threadingconstructs.jl:51</text>
-<rect x="68.55" y="353" width="213.87" height="15" rx="2" fill="#00B58B" data-dinfo="./"/>
-<text x="68.55" dx="4" y="364.25">#55#threadsfor_fun#10 in threadingconstructs.jl:84</text>
-<rect x="68.55" y="338" width="0.97" height="15" rx="2" fill="#E1B2FF" data-dinfo="/Users/michaelbennett/Dropbox/Yale/Year 1/Computational Methods/Project/code/"/>
-<text x="68.55" dx="4" y="349.25">macro expansion in stochastic_employment.jl:0</text>
-<rect x="69.52" y="338" width="177.09" height="15" rx="2" fill="#E40041" data-dinfo="/Users/michaelbennett/Dropbox/Yale/Year 1/Computational Methods/Project/code/"/>
-<text x="69.52" dx="4" y="349.25">macro expansion in stochastic_employment.jl:139</text>
-<rect x="85.97" y="323" width="111.29" height="15" rx="2" fill="#00B58B" data-dinfo="/Users/michaelbennett/Dropbox/Yale/Year 1/Computational Methods/Project/code/"/>
-<text x="85.97" dx="4" y="334.25">value_fn_spec in stochastic_employment.jl:123</text>
-<rect x="99.52" y="308" width="0.48" height="15" rx="2" fill="#6FDC91" data-dinfo="/Users/michaelbennett/Dropbox/Yale/Year 1/Computational Methods/Project/code/"/>
-<text x="99.52" dx="4" y="319.25">value_function in stochastic_employment.jl:94</text>
-<rect x="99.52" y="293" width="0.48" height="15" rx="2" fill="#2CA3FF" data-dinfo="./"/>
-<text x="99.52" dx="4" y="304.25">getindex in array.jl:925</text>
-<rect x="100" y="308" width="96.77" height="15" rx="2" fill="#E1B2FF" data-dinfo="/Users/michaelbennett/Dropbox/Yale/Year 1/Computational Methods/Project/code/"/>
-<text x="100" dx="4" y="319.25">value_function in stochastic_employment.jl:95</text>
-<rect x="100" y="293" width="94.84" height="15" rx="2" fill="#00B58B" data-dinfo="./"/>
-<text x="100" dx="4" y="304.25">getindex in abstractarray.jl:1241</text>
-<rect x="100" y="278" width="0.48" height="15" rx="2" fill="#6FDC91" data-dinfo="./"/>
-<text x="100" dx="4" y="289.25">_getindex in multidimensional.jl:874</text>
-<rect x="100" y="263" width="0.48" height="15" rx="2" fill="#2CA3FF" data-dinfo="./"/>
-<text x="100" dx="4" y="274.25">checkbounds in abstractarray.jl:0</text>
-<rect x="100.48" y="278" width="94.36" height="15" rx="2" fill="#E1B2FF" data-dinfo="./"/>
-<text x="100.48" dx="4" y="289.25">_getindex in multidimensional.jl:875</text>
-<rect x="100.48" y="263" width="0.49" height="15" rx="2" fill="#00B58B" data-dinfo="./"/>
-<text x="100.48" dx="4" y="274.25">_unsafe_getindex in multidimensional.jl:886</text>
-<rect x="100.48" y="248" width="0.49" height="15" rx="2" fill="#E1B2FF" data-dinfo="./"/>
-<text x="100.48" dx="4" y="259.25">index_shape in multidimensional.jl:747</text>
-<rect x="100.48" y="233" width="0.49" height="15" rx="2" fill="#2CA3FF" data-dinfo="./"/>
-<text x="100.48" dx="4" y="244.25">index_shape in multidimensional.jl:748</text>
-<rect x="100.48" y="218" width="0.49" height="15" rx="2" fill="#6FDC91" data-dinfo="./"/>
-<text x="100.48" dx="4" y="229.25">axes in indices.jl:356</text>
-<rect x="100.97" y="263" width="87.58" height="15" rx="2" fill="#2CA3FF" data-dinfo="./"/>
-<text x="100.97" dx="4" y="274.25">_unsafe_getindex in multidimensional.jl:887</text>
-<rect x="100.97" y="248" width="87.58" height="15" rx="2" fill="#6FDC91" data-dinfo="./"/>
-<text x="100.97" dx="4" y="259.25">similar in abstractarray.jl:795</text>
-<rect x="100.97" y="233" width="87.58" height="15" rx="2" fill="#00B58B" data-dinfo="./"/>
-<text x="100.97" dx="4" y="244.25">similar in array.jl:378</text>
-<rect x="100.97" y="218" width="87.58" height="15" rx="2" fill="#E1B2FF" data-dinfo="./"/>
-<text x="100.97" dx="4" y="229.25">Array in boot.jl:468</text>
-<rect x="100.97" y="203" width="87.58" height="15" rx="2" fill="#F6A60A" data-dinfo="./"/>
-<text x="100.97" dx="4" y="214.25">Array in boot.jl:459</text>
-<rect x="188.55" y="263" width="6.29" height="15" rx="2" fill="#00B58B" data-dinfo="./"/>
-<text x="188.55" dx="4" y="274.25">_unsafe_getindex in multidimensional.jl:889</text>
-<rect x="188.55" y="248" width="3.39" height="15" rx="2" fill="#E1B2FF" data-dinfo="./"/>
-<text x="188.55" dx="4" y="259.25">_unsafe_getindex! in multidimensional.jl:898</text>
-<rect x="188.55" y="233" width="0.97" height="15" rx="2" fill="#2CA3FF" data-dinfo="./"/>
-<text x="188.55" dx="4" y="244.25">macro expansion in cartesian.jl:62</text>
-<rect x="189.52" y="233" width="2.42" height="15" rx="2" fill="#00B58B" data-dinfo="./"/>
-<text x="189.52" dx="4" y="244.25">macro expansion in cartesian.jl:64</text>
-<rect x="189.52" y="218" width="2.42" height="15" rx="2" fill="#6FDC91" data-dinfo="./"/>
-<text x="189.52" dx="4" y="229.25">macro expansion in multidimensional.jl:903</text>
-<rect x="189.52" y="203" width="2.42" height="15" rx="2" fill="#2CA3FF" data-dinfo="./"/>
-<text x="189.52" dx="4" y="214.25">setindex! in array.jl:966</text>
-<rect x="191.94" y="248" width="2.9" height="15" rx="2" fill="#6FDC91" data-dinfo="./"/>
-<text x="191.94" dx="4" y="259.25">_unsafe_getindex! in multidimensional.jl:911</text>
-<rect x="191.94" y="233" width="2.9" height="15" rx="2" fill="#2CA3FF" data-dinfo="./"/>
-<text x="191.94" dx="4" y="244.25">macro expansion in multidimensional.jl:898</text>
-<rect x="191.94" y="218" width="1.93" height="15" rx="2" fill="#E1B2FF" data-dinfo="./"/>
-<text x="191.94" dx="4" y="229.25">macro expansion in cartesian.jl:62</text>
-<rect x="193.87" y="218" width="0.97" height="15" rx="2" fill="#6FDC91" data-dinfo="./"/>
-<text x="193.87" dx="4" y="229.25">macro expansion in cartesian.jl:64</text>
-<rect x="193.87" y="203" width="0.48" height="15" rx="2" fill="#00B58B" data-dinfo="./"/>
-<text x="193.87" dx="4" y="214.25">macro expansion in multidimensional.jl:901</text>
-<rect x="194.35" y="203" width="0.49" height="15" rx="2" fill="#2CA3FF" data-dinfo="./"/>
-<text x="194.35" dx="4" y="214.25">macro expansion in multidimensional.jl:903</text>
-<rect x="194.35" y="188" width="0.49" height="15" rx="2" fill="#6FDC91" data-dinfo="./"/>
-<text x="194.35" dx="4" y="199.25">setindex! in array.jl:966</text>
-<rect x="194.84" y="293" width="1.93" height="15" rx="2" fill="#2CA3FF" data-dinfo="/Users/julia/.julia/scratchspaces/a66863c6-20e8-4ff4-8a62-49f30b1f605e/agent-cache/default-macmini-aarch64-4.0/build/default-macmini-aarch64-4-0/julialang/julia-release-1-dot-8/usr/share/julia/stdlib/v1.8/LinearAlgebra/src/"/>
-<text x="194.84" dx="4" y="304.25">dot in matmul.jl:14</text>
-<rect x="194.84" y="278" width="1.93" height="15" rx="2" fill="#6FDC91" data-dinfo="/Users/julia/.julia/scratchspaces/a66863c6-20e8-4ff4-8a62-49f30b1f605e/agent-cache/default-macmini-aarch64-4.0/build/default-macmini-aarch64-4-0/julialang/julia-release-1-dot-8/usr/share/julia/stdlib/v1.8/LinearAlgebra/src/"/>
-<text x="194.84" dx="4" y="289.25">dot in blas.jl:390</text>
-<rect x="194.84" y="263" width="0.48" height="15" rx="2" fill="#2CA3FF" data-dinfo="/Users/julia/.julia/scratchspaces/a66863c6-20e8-4ff4-8a62-49f30b1f605e/agent-cache/default-macmini-aarch64-4.0/build/default-macmini-aarch64-4-0/julialang/julia-release-1-dot-8/usr/share/julia/stdlib/v1.8/LinearAlgebra/src/"/>
-<text x="194.84" dx="4" y="274.25">vec_pointer_stride in blas.jl:172</text>
-<rect x="194.84" y="248" width="0.48" height="15" rx="2" fill="#E1B2FF" data-dinfo="/Users/julia/.julia/scratchspaces/a66863c6-20e8-4ff4-8a62-49f30b1f605e/agent-cache/default-macmini-aarch64-4.0/build/default-macmini-aarch64-4-0/julialang/julia-release-1-dot-8/usr/share/julia/stdlib/v1.8/LinearAlgebra/src/"/>
-<text x="194.84" dx="4" y="259.25">vec_pointer_stride in blas.jl:172</text>
-<rect x="194.84" y="233" width="0.48" height="15" rx="2" fill="#00B58B" data-dinfo="./"/>
-<text x="194.84" dx="4" y="244.25">pointer in abstractarray.jl:1187</text>
-<rect x="194.84" y="218" width="0.48" height="15" rx="2" fill="#E1B2FF" data-dinfo="./"/>
-<text x="194.84" dx="4" y="229.25">unsafe_convert in pointer.jl:65</text>
-<rect x="242.26" y="323" width="0.97" height="15" rx="2" fill="#2CA3FF" data-dinfo="/Users/michaelbennett/Dropbox/Yale/Year 1/Computational Methods/Project/code/"/>
-<text x="242.26" dx="4" y="334.25">value_function in stochastic_employment.jl:96</text>
-<rect x="246.61" y="338" width="24.68" height="15" rx="2" fill="#F3004D" data-dinfo="/Users/michaelbennett/Dropbox/Yale/Year 1/Computational Methods/Project/code/"/>
-<text x="246.61" dx="4" y="349.25">macro expansion in stochastic_employment.jl:142</text>
-<rect x="271.29" y="338" width="9.19" height="15" rx="2" fill="#E40041" data-dinfo="/Users/michaelbennett/Dropbox/Yale/Year 1/Computational Methods/Project/code/"/>
-<text x="271.29" dx="4" y="349.25">macro expansion in stochastic_employment.jl:143</text>
-<rect x="280.48" y="338" width="1.94" height="15" rx="2" fill="#E1B2FF" data-dinfo="/Users/michaelbennett/Dropbox/Yale/Year 1/Computational Methods/Project/code/"/>
-<text x="280.48" dx="4" y="349.25">macro expansion in stochastic_employment.jl:147</text>
-<rect x="329.35" y="383" width="0.49" height="15" rx="2" fill="#2CA3FF" data-dinfo="./"/>
-<text x="329.35" dx="4" y="394.25">task_done_hook in task.jl:614</text>
-<rect x="329.84" y="383" width="48.87" height="15" rx="2" fill="#00B58B" data-dinfo="./"/>
-<text x="329.84" dx="4" y="394.25">task_done_hook in task.jl:634</text>
-<rect x="329.84" y="368" width="48.39" height="15" rx="2" fill="#6FDC91" data-dinfo="./"/>
-<text x="329.84" dx="4" y="379.25">wait in task.jl:930</text>
-<rect x="329.84" y="353" width="48.39" height="15" rx="2" fill="#2CA3FF" data-dinfo="./"/>
-<text x="329.84" dx="4" y="364.25">poptask in task.jl:921</text>
-<rect x="378.23" y="368" width="0.48" height="15" rx="2" fill="#E1B2FF" data-dinfo="./"/>
-<text x="378.23" dx="4" y="379.25">wait in task.jl:931</text>
-<rect x="378.23" y="353" width="0.48" height="15" rx="2" fill="#00B58B" data-dinfo="./"/>
-<text x="378.23" dx="4" y="364.25">try_yieldto in task.jl:861</text>
-<rect x="384.03" y="383" width="16.45" height="15" rx="2" fill="#2CA3FF" data-dinfo="/Users/julia/.julia/scratchspaces/a66863c6-20e8-4ff4-8a62-49f30b1f605e/agent-cache/default-macmini-aarch64-4.0/build/default-macmini-aarch64-4-0/julialang/julia-release-1-dot-8/usr/share/julia/stdlib/v1.8/LinearAlgebra/src/"/>
-<text x="384.03" dx="4" y="394.25">dot in blas.jl:387</text>
-<rect x="400.48" y="383" width="4.84" height="15" rx="2" fill="#00B58B" data-dinfo="/Users/julia/.julia/scratchspaces/a66863c6-20e8-4ff4-8a62-49f30b1f605e/agent-cache/default-macmini-aarch64-4.0/build/default-macmini-aarch64-4-0/julialang/julia-release-1-dot-8/usr/share/julia/stdlib/v1.8/LinearAlgebra/src/"/>
-<text x="400.48" dx="4" y="394.25">dot in blas.jl:390</text>
-<rect x="400.48" y="368" width="4.84" height="15" rx="2" fill="#6FDC91" data-dinfo="/Users/julia/.julia/scratchspaces/a66863c6-20e8-4ff4-8a62-49f30b1f605e/agent-cache/default-macmini-aarch64-4.0/build/default-macmini-aarch64-4-0/julialang/julia-release-1-dot-8/usr/share/julia/stdlib/v1.8/LinearAlgebra/src/"/>
-<text x="400.48" dx="4" y="379.25">dot in blas.jl:340</text>
-<rect x="405.32" y="383" width="8.71" height="15" rx="2" fill="#2CA3FF" data-dinfo="/Users/michaelbennett/Dropbox/Yale/Year 1/Computational Methods/Project/code/"/>
-<text x="405.32" dx="4" y="394.25">value_function in stochastic_employment.jl:87</text>
-<rect x="935.65" y="383" width="1.45" height="15" rx="2" fill="#00B58B" data-dinfo="./"/>
-<text x="935.65" dx="4" y="394.25">&amp;gt; in operators.jl:382</text>
-<rect x="935.65" y="368" width="1.45" height="15" rx="2" fill="#E1B2FF" data-dinfo="./"/>
-<text x="935.65" dx="4" y="379.25">&amp;lt; in float.jl:412</text>
+<g id="fig-85cc9edac4d0446696743e64962f7d4c-frame" clip-path="url(#fig-85cc9edac4d0446696743e64962f7d4c-clip)">
+<rect id="fig-85cc9edac4d0446696743e64962f7d4c-bg" x="0" y="0" width="960" height="436"/>
+<text id="fig-85cc9edac4d0446696743e64962f7d4c-caption" x="480" y="24">Profile results</text>
+<g id="fig-85cc9edac4d0446696743e64962f7d4c-viewport" transform="scale(1)">
+<rect x="10" y="383" width="940.14" height="15" rx="2" fill="#F3004D" data-dinfo=""/>
+<text x="10" dx="4" y="394.25"> in :-1</text>
+<rect x="10" y="368" width="0.83" height="15" rx="2" fill="#00B58B" data-dinfo="./"/>
+<text x="10" dx="4" y="379.25">- in arraymath.jl:7</text>
+<rect x="10" y="353" width="0.83" height="15" rx="2" fill="#E1B2FF" data-dinfo="./"/>
+<text x="10" dx="4" y="364.25">promote_shape in indices.jl:168</text>
+<rect x="50.55" y="368" width="4.14" height="15" rx="2" fill="#2CA3FF" data-dinfo="./"/>
+<text x="50.55" dx="4" y="379.25">#15 in task.jl:484</text>
+<rect x="50.55" y="353" width="4.14" height="15" rx="2" fill="#6FDC91" data-dinfo="/Users/michaelbennett/.julia/packages/IJulia/6TIq1/src/"/>
+<text x="50.55" dx="4" y="364.25">eventloop in eventloop.jl:8</text>
+<rect x="50.55" y="338" width="4.14" height="15" rx="2" fill="#00B58B" data-dinfo="./"/>
+<text x="50.55" dx="4" y="349.25">invokelatest in essentials.jl:726</text>
+<rect x="50.55" y="323" width="4.14" height="15" rx="2" fill="#F3004D" data-dinfo="./"/>
+<text x="50.55" dx="4" y="334.25">#invokelatest#2 in essentials.jl:729</text>
+<rect x="50.55" y="308" width="4.14" height="15" rx="2" fill="#D42137" data-dinfo="/Users/michaelbennett/.julia/packages/IJulia/6TIq1/src/"/>
+<text x="50.55" dx="4" y="319.25">execute_request in execute_request.jl:67</text>
+<rect x="50.55" y="293" width="4.14" height="15" rx="2" fill="#E1B2FF" data-dinfo="/Users/michaelbennett/.julia/packages/SoftGlobalScope/u4UzH/src/"/>
+<text x="50.55" dx="4" y="304.25">softscope_include_string in SoftGlobalScope.jl:65</text>
+<rect x="50.55" y="278" width="4.14" height="15" rx="2" fill="#00B58B" data-dinfo="./"/>
+<text x="50.55" dx="4" y="289.25">include_string in loading.jl:1428</text>
+<rect x="50.55" y="263" width="4.14" height="15" rx="2" fill="#F3004D" data-dinfo="./"/>
+<text x="50.55" dx="4" y="274.25">eval in boot.jl:368</text>
+<rect x="50.55" y="248" width="4.14" height="15" rx="2" fill="#00B58B" data-dinfo="/Users/michaelbennett/Dropbox/Yale/Year 1/Computational Methods/Project/code/"/>
+<text x="50.55" dx="4" y="259.25">do_VFI##kw in stochastic_employment.jl:100</text>
+<rect x="50.55" y="233" width="1.66" height="15" rx="2" fill="#E1B2FF" data-dinfo="/Users/michaelbennett/Dropbox/Yale/Year 1/Computational Methods/Project/code/"/>
+<text x="50.55" dx="4" y="244.25">#do_VFI#9 in stochastic_employment.jl:134</text>
+<rect x="50.55" y="218" width="1.66" height="15" rx="2" fill="#00B58B" data-dinfo="./"/>
+<text x="50.55" dx="4" y="229.25">macro expansion in threadingconstructs.jl:89</text>
+<rect x="50.55" y="203" width="1.66" height="15" rx="2" fill="#E1B2FF" data-dinfo="./"/>
+<text x="50.55" dx="4" y="214.25">threading_run in threadingconstructs.jl:41</text>
+<rect x="52.21" y="233" width="2.48" height="15" rx="2" fill="#E40041" data-dinfo="/Users/michaelbennett/Dropbox/Yale/Year 1/Computational Methods/Project/code/"/>
+<text x="52.21" dx="4" y="244.25">#do_VFI#9 in stochastic_employment.jl:154</text>
+<rect x="52.21" y="218" width="0.82" height="15" rx="2" fill="#2CA3FF" data-dinfo="./"/>
+<text x="52.21" dx="4" y="229.25">broadcasted in broadcast.jl:1298</text>
+<rect x="52.21" y="203" width="0.82" height="15" rx="2" fill="#E40041" data-dinfo="./"/>
+<text x="52.21" dx="4" y="214.25">broadcasted in broadcast.jl:1306</text>
+<rect x="53.03" y="218" width="0.83" height="15" rx="2" fill="#00B58B" data-dinfo="./"/>
+<text x="53.03" dx="4" y="229.25">materialize in broadcast.jl:860</text>
+<rect x="53.03" y="203" width="0.83" height="15" rx="2" fill="#E1B2FF" data-dinfo="./"/>
+<text x="53.03" dx="4" y="214.25">copy in broadcast.jl:885</text>
+<rect x="53.03" y="188" width="0.83" height="15" rx="2" fill="#00B58B" data-dinfo="./"/>
+<text x="53.03" dx="4" y="199.25">copyto! in broadcast.jl:913</text>
+<rect x="53.03" y="173" width="0.83" height="15" rx="2" fill="#E1B2FF" data-dinfo="./"/>
+<text x="53.03" dx="4" y="184.25">copyto! in broadcast.jl:960</text>
+<rect x="53.03" y="158" width="0.83" height="15" rx="2" fill="#00B58B" data-dinfo="./"/>
+<text x="53.03" dx="4" y="169.25">macro expansion in multidimensional.jl:0</text>
+<rect x="53.86" y="218" width="0.83" height="15" rx="2" fill="#2CA3FF" data-dinfo="./"/>
+<text x="53.86" dx="4" y="229.25">maximum in reducedim.jl:994</text>
+<rect x="53.86" y="203" width="0.83" height="15" rx="2" fill="#6FDC91" data-dinfo="./"/>
+<text x="53.86" dx="4" y="214.25">#maximum#780 in reducedim.jl:994</text>
+<rect x="53.86" y="188" width="0.83" height="15" rx="2" fill="#2CA3FF" data-dinfo="./"/>
+<text x="53.86" dx="4" y="199.25">_maximum in reducedim.jl:998</text>
+<rect x="53.86" y="173" width="0.83" height="15" rx="2" fill="#6FDC91" data-dinfo="./"/>
+<text x="53.86" dx="4" y="184.25">#_maximum#782 in reducedim.jl:998</text>
+<rect x="53.86" y="158" width="0.83" height="15" rx="2" fill="#2CA3FF" data-dinfo="./"/>
+<text x="53.86" dx="4" y="169.25">_maximum in reducedim.jl:999</text>
+<rect x="53.86" y="143" width="0.83" height="15" rx="2" fill="#E1B2FF" data-dinfo="./"/>
+<text x="53.86" dx="4" y="154.25">#_maximum#783 in reducedim.jl:999</text>
+<rect x="53.86" y="128" width="0.83" height="15" rx="2" fill="#00B58B" data-dinfo="./"/>
+<text x="53.86" dx="4" y="139.25">mapreduce in reducedim.jl:357</text>
+<rect x="53.86" y="113" width="0.83" height="15" rx="2" fill="#E1B2FF" data-dinfo="./"/>
+<text x="53.86" dx="4" y="124.25">#mapreduce#765 in reducedim.jl:357</text>
+<rect x="53.86" y="98" width="0.83" height="15" rx="2" fill="#00B58B" data-dinfo="./"/>
+<text x="53.86" dx="4" y="109.25">_mapreduce_dim in reducedim.jl:365</text>
+<rect x="53.86" y="83" width="0.83" height="15" rx="2" fill="#E1B2FF" data-dinfo="./"/>
+<text x="53.86" dx="4" y="94.25">_mapreduce in reduce.jl:442</text>
+<rect x="53.86" y="68" width="0.83" height="15" rx="2" fill="#00B58B" data-dinfo="./"/>
+<text x="53.86" dx="4" y="79.25">mapreduce_impl in reduce.jl:658</text>
+<rect x="53.86" y="53" width="0.83" height="15" rx="2" fill="#E1B2FF" data-dinfo="./"/>
+<text x="53.86" dx="4" y="64.25">max in math.jl:760</text>
+<rect x="53.86" y="38" width="0.83" height="15" rx="2" fill="#00B58B" data-dinfo="./"/>
+<text x="53.86" dx="4" y="49.25">signbit in floatfuncs.jl:15</text>
+<rect x="54.69" y="368" width="0.83" height="15" rx="2" fill="#00B58B" data-dinfo="./"/>
+<text x="54.69" dx="4" y="379.25">#666 in task.jl:134</text>
+<rect x="54.69" y="353" width="0.83" height="15" rx="2" fill="#E1B2FF" data-dinfo="./"/>
+<text x="54.69" dx="4" y="364.25">macro expansion in asyncevent.jl:281</text>
+<rect x="54.69" y="338" width="0.83" height="15" rx="2" fill="#2CA3FF" data-dinfo="/Users/michaelbennett/.julia/packages/IJulia/6TIq1/src/"/>
+<text x="54.69" dx="4" y="349.25">send_stdout in stdio.jl:124</text>
+<rect x="54.69" y="323" width="0.83" height="15" rx="2" fill="#6FDC91" data-dinfo="/Users/michaelbennett/.julia/packages/IJulia/6TIq1/src/"/>
+<text x="54.69" dx="4" y="334.25">send_stdio in stdio.jl:121</text>
+<rect x="54.69" y="308" width="0.83" height="15" rx="2" fill="#2CA3FF" data-dinfo="/Users/michaelbennett/.julia/packages/IJulia/6TIq1/src/"/>
+<text x="54.69" dx="4" y="319.25">send_stream in stdio.jl:163</text>
+<rect x="54.69" y="293" width="0.83" height="15" rx="2" fill="#6FDC91" data-dinfo="/Users/michaelbennett/.julia/packages/IJulia/6TIq1/src/"/>
+<text x="54.69" dx="4" y="304.25">send_ipython in msg.jl:55</text>
+<rect x="54.69" y="278" width="0.83" height="15" rx="2" fill="#2CA3FF" data-dinfo="/Users/michaelbennett/.julia/packages/IJulia/6TIq1/src/"/>
+<text x="54.69" dx="4" y="289.25">hmac in hmac.jl:10</text>
+<rect x="54.69" y="263" width="0.83" height="15" rx="2" fill="#6FDC91" data-dinfo="./strings/"/>
+<text x="54.69" dx="4" y="274.25">write in io.jl:244</text>
+<rect x="54.69" y="248" width="0.83" height="15" rx="2" fill="#2CA3FF" data-dinfo="./"/>
+<text x="54.69" dx="4" y="259.25">unsafe_write in io.jl:292</text>
+<rect x="54.69" y="233" width="0.83" height="15" rx="2" fill="#E1B2FF" data-dinfo="/Users/michaelbennett/.julia/packages/MbedTLS/lqmet/src/"/>
+<text x="54.69" dx="4" y="244.25">write in md.jl:143</text>
+<rect x="54.69" y="218" width="0.83" height="15" rx="2" fill="#00B58B" data-dinfo="/Users/michaelbennett/.julia/packages/MbedTLS/lqmet/src/"/>
+<text x="54.69" dx="4" y="229.25">_write in md.jl:128</text>
+<rect x="54.69" y="203" width="0.83" height="15" rx="2" fill="#E1B2FF" data-dinfo="/Users/michaelbennett/.julia/packages/MbedTLS/lqmet/src/"/>
+<text x="54.69" dx="4" y="214.25">macro expansion in error.jl:3</text>
+<rect x="55.52" y="368" width="282.2" height="15" rx="2" fill="#2CA3FF" data-dinfo="./"/>
+<text x="55.52" dx="4" y="379.25">#1 in threadingconstructs.jl:30</text>
+<rect x="55.52" y="353" width="282.2" height="15" rx="2" fill="#E40041" data-dinfo="./"/>
+<text x="55.52" dx="4" y="364.25">#55#threadsfor_fun in threadingconstructs.jl:51</text>
+<rect x="55.52" y="338" width="211.03" height="15" rx="2" fill="#00B58B" data-dinfo="./"/>
+<text x="55.52" dx="4" y="349.25">#55#threadsfor_fun#10 in threadingconstructs.jl:84</text>
+<rect x="55.52" y="323" width="172.96" height="15" rx="2" fill="#F3004D" data-dinfo="/Users/michaelbennett/Dropbox/Yale/Year 1/Computational Methods/Project/code/"/>
+<text x="55.52" dx="4" y="334.25">macro expansion in stochastic_employment.jl:140</text>
+<rect x="142.41" y="308" width="3.31" height="15" rx="2" fill="#00B58B" data-dinfo="/Users/michaelbennett/Dropbox/Yale/Year 1/Computational Methods/Project/code/"/>
+<text x="142.41" dx="4" y="319.25">value_fn_spec in stochastic_employment.jl:124</text>
+<rect x="142.41" y="293" width="1.66" height="15" rx="2" fill="#E1B2FF" data-dinfo="/Users/michaelbennett/Dropbox/Yale/Year 1/Computational Methods/Project/code/"/>
+<text x="142.41" dx="4" y="304.25">value_function in stochastic_employment.jl:95</text>
+<rect x="142.41" y="278" width="1.66" height="15" rx="2" fill="#00B58B" data-dinfo="./"/>
+<text x="142.41" dx="4" y="289.25">maybeview in views.jl:147</text>
+<rect x="142.41" y="263" width="1.66" height="15" rx="2" fill="#E1B2FF" data-dinfo="./"/>
+<text x="142.41" dx="4" y="274.25">getindex in array.jl:925</text>
+<rect x="219.38" y="308" width="2.48" height="15" rx="2" fill="#2CA3FF" data-dinfo="/Users/michaelbennett/Dropbox/Yale/Year 1/Computational Methods/Project/code/"/>
+<text x="219.38" dx="4" y="319.25">value_function in stochastic_employment.jl:97</text>
+<rect x="228.48" y="323" width="26.49" height="15" rx="2" fill="#E40041" data-dinfo="/Users/michaelbennett/Dropbox/Yale/Year 1/Computational Methods/Project/code/"/>
+<text x="228.48" dx="4" y="334.25">macro expansion in stochastic_employment.jl:143</text>
+<rect x="254.97" y="323" width="9.93" height="15" rx="2" fill="#F3004D" data-dinfo="/Users/michaelbennett/Dropbox/Yale/Year 1/Computational Methods/Project/code/"/>
+<text x="254.97" dx="4" y="334.25">macro expansion in stochastic_employment.jl:144</text>
+<rect x="264.9" y="323" width="0.82" height="15" rx="2" fill="#6FDC91" data-dinfo="/Users/michaelbennett/Dropbox/Yale/Year 1/Computational Methods/Project/code/"/>
+<text x="264.9" dx="4" y="334.25">macro expansion in stochastic_employment.jl:148</text>
+<rect x="265.72" y="323" width="0.83" height="15" rx="2" fill="#E1B2FF" data-dinfo="/Users/michaelbennett/Dropbox/Yale/Year 1/Computational Methods/Project/code/"/>
+<text x="265.72" dx="4" y="334.25">macro expansion in stochastic_employment.jl:149</text>
+<rect x="265.72" y="308" width="0.83" height="15" rx="2" fill="#00B58B" data-dinfo="./"/>
+<text x="265.72" dx="4" y="319.25">setindex! in array.jl:968</text>
+<rect x="337.72" y="368" width="38.07" height="15" rx="2" fill="#00B58B" data-dinfo="./"/>
+<text x="337.72" dx="4" y="379.25">task_done_hook in task.jl:634</text>
+<rect x="337.72" y="353" width="38.07" height="15" rx="2" fill="#E1B2FF" data-dinfo="./"/>
+<text x="337.72" dx="4" y="364.25">wait in task.jl:930</text>
+<rect x="337.72" y="338" width="38.07" height="15" rx="2" fill="#2CA3FF" data-dinfo="./"/>
+<text x="337.72" dx="4" y="349.25">poptask in task.jl:921</text>
+<rect x="388.21" y="368" width="18.2" height="15" rx="2" fill="#2CA3FF" data-dinfo="/Users/julia/.julia/scratchspaces/a66863c6-20e8-4ff4-8a62-49f30b1f605e/agent-cache/default-macmini-aarch64-4.0/build/default-macmini-aarch64-4-0/julialang/julia-release-1-dot-8/usr/share/julia/stdlib/v1.8/LinearAlgebra/src/"/>
+<text x="388.21" dx="4" y="379.25">dot in blas.jl:387</text>
+<rect x="406.41" y="368" width="9.93" height="15" rx="2" fill="#00B58B" data-dinfo="/Users/julia/.julia/scratchspaces/a66863c6-20e8-4ff4-8a62-49f30b1f605e/agent-cache/default-macmini-aarch64-4.0/build/default-macmini-aarch64-4-0/julialang/julia-release-1-dot-8/usr/share/julia/stdlib/v1.8/LinearAlgebra/src/"/>
+<text x="406.41" dx="4" y="379.25">dot in blas.jl:390</text>
+<rect x="406.41" y="353" width="9.93" height="15" rx="2" fill="#6FDC91" data-dinfo="/Users/julia/.julia/scratchspaces/a66863c6-20e8-4ff4-8a62-49f30b1f605e/agent-cache/default-macmini-aarch64-4.0/build/default-macmini-aarch64-4-0/julialang/julia-release-1-dot-8/usr/share/julia/stdlib/v1.8/LinearAlgebra/src/"/>
+<text x="406.41" dx="4" y="364.25">dot in blas.jl:340</text>
+<rect x="416.34" y="368" width="0.83" height="15" rx="2" fill="#2CA3FF" data-dinfo="/Users/michaelbennett/Dropbox/Yale/Year 1/Computational Methods/Project/code/"/>
+<text x="416.34" dx="4" y="379.25">value_fn_spec in stochastic_employment.jl:124</text>
+<rect x="416.34" y="353" width="0.83" height="15" rx="2" fill="#E1B2FF" data-dinfo="/Users/michaelbennett/Dropbox/Yale/Year 1/Computational Methods/Project/code/"/>
+<text x="416.34" dx="4" y="364.25">value_function in stochastic_employment.jl:88</text>
+<rect x="417.17" y="368" width="15.73" height="15" rx="2" fill="#00B58B" data-dinfo="/Users/michaelbennett/Dropbox/Yale/Year 1/Computational Methods/Project/code/"/>
+<text x="417.17" dx="4" y="379.25">value_function in stochastic_employment.jl:88</text>
+<rect x="933.59" y="368" width="0.82" height="15" rx="2" fill="#2CA3FF" data-dinfo="./"/>
+<text x="933.59" dx="4" y="379.25">&amp;gt; in operators.jl:382</text>
+<rect x="933.59" y="353" width="0.82" height="15" rx="2" fill="#6FDC91" data-dinfo="./"/>
+<text x="933.59" dx="4" y="364.25">&amp;lt; in float.jl:412</text>
 </g></g>
 <script><![CDATA[
 // Snap.svg 0.3.0
@@ -666,10 +588,10 @@ f+=g+"]",i[b]=f}return Function("val","return Snap.path.toString.call(["+i+"])")
 <script><![CDATA[
 if (typeof require === 'function' && define.amd) {
     require(['ProfileSVG'], function (ProfileSVG) {
-        ProfileSVG.initialize("fig-1ddb37643ce44754ba306e44e0c8539e");
+        ProfileSVG.initialize("fig-85cc9edac4d0446696743e64962f7d4c");
     });
 } else {
-    ProfileSVG.initialize("fig-1ddb37643ce44754ba306e44e0c8539e");
+    ProfileSVG.initialize("fig-85cc9edac4d0446696743e64962f7d4c");
 }
 ]]></script>
 </svg>
