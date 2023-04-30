@@ -97,6 +97,23 @@ function value_function(
     return flow_val + β * ECont
 end
 
+function max_V_ix(value_fn, V, i_h, i_a, i_e)
+    val::Float64 = -Inf
+    val_i_hp::Int = 0
+    val_i_ap::Int = 0
+    for i_hp ∈ 1:h_N, i_ap ∈ 1:a_N
+        @views candidate_val = value_fn(
+            V, i_h, i_a, i_e, i_hp, i_ap
+        )
+        if candidate_val > val
+            val = candidate_val
+            val_i_hp = i_hp
+            val_i_ap = i_ap
+        end
+    end
+    return val, val_i_hp, val_i_ap
+end
+
 function do_VFI(
         flow_value::Function, h_grid::Vector{Float64}, a_grid::Vector{Float64},
         e_grid::Vector{Int}, trans_mat::Matrix{Float64}, β::Float64;
@@ -108,17 +125,14 @@ function do_VFI(
 
     # Set up grids
 
-    ap_grid = copy(a_grid)
-    hp_grid = copy(h_grid)
-
     V = zeros(h_N, a_N, e_N)
-    hp_mat = Array{Float64}(undef, h_N, a_N, e_N)
-    ap_mat = Array{Float64}(undef, h_N, a_N, e_N)
+    i_hp_mat = Array{Int}(undef, h_N, a_N, e_N)
+    i_ap_mat = Array{Int}(undef, h_N, a_N, e_N)
 
     println("Making flow value matrix ...")
 
     flow_value_mat = make_flow_value_mat(
-        flow_value, h_grid, a_grid, e_grid, hp_grid, ap_grid; kwargs...
+        flow_value, h_grid, a_grid, e_grid, h_grid, a_grid; kwargs...
     )
 
     value_fn_spec(V, i_h, i_a, i_e, i_hp, i_ap) = value_function(
@@ -134,21 +148,12 @@ function do_VFI(
         Threads.@threads for i_h ∈ 1:h_N
             for i_a ∈ 1:a_N, i_e ∈ 1:e_N
                 val::Float64 = -Inf
-                val_hp::Float64 = NaN
-                val_ap::Float64 = NaN
-                for i_hp ∈ 1:h_N, i_ap ∈ 1:a_N
-                    @views candidate_val = value_fn_spec(
-                        V, i_h, i_a, i_e, i_hp, i_ap
-                    )
-                    if candidate_val > val
-                        val = candidate_val
-                        val_hp = hp_grid[i_hp]
-                        val_ap = ap_grid[i_ap]
-                    end
-                end
+                val, val_i_hp, val_i_ap = max_V_ix(
+                    value_fn_spec, V, i_h, i_a, i_e
+                )
                 val_mat[i_h, i_a, i_e] = val
-                hp_mat[i_h, i_a, i_e] = val_hp
-                ap_mat[i_h, i_a, i_e] = val_ap
+                i_hp_mat[i_h, i_a, i_e] = val_i_hp
+                i_ap_mat[i_h, i_a, i_e] = val_i_ap
             end
         end
         diff = maximum(abs.(V - val_mat))
