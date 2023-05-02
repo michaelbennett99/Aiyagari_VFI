@@ -1,5 +1,7 @@
 using BellmanSolver, NumericalMethods, Distributions, LinearAlgebra
-using ProfileSVG
+using Interpolations, Optim
+
+set_zero_subnormals(true)
 
 """
 The variables should be interpreted as follows:
@@ -9,50 +11,52 @@ The variables should be interpreted as follows:
     - s: schooling
 """
 
-function calculate_l(e::Int, s::Float64)
+function calculate_l(e::Int, s::Float32)::Float32
     return e + (1-e) * s
 end
 
 function calculate_s(
-        h::Float64, hp::Float64, A::Float64, δ::Float64, α::Float64, η::Float64
-    )
+        h::Float32, hp::Float32, A::Float32, δ::Float32, α::Float32, η::Float32
+    )::Float32
     return ((hp - (1-δ)*h)/(A*h^η))^(1/α)
 end
 
 function calculate_c(
-        z::Float64, h::Float64, e::Int64,
-        s::Float64, a::Float64, ap::Float64, r::Float64
+        z::Float32, h::Float32, e::Int64,
+        s::Float32, a::Float32, ap::Float32, r::Float32
     )
     return z + (h - z) * e * (1-s) + (1+r) * a - ap
 end
 
 function calculate_h(
-        s::Float64, h::Float64, A::Float64, η::Float64, δ::Float64, α::Float64
-    )
+        s::Float32, h::Float32, A::Float32, η::Float32, δ::Float32, α::Float32
+    )::Float32
     return A * s^α * h^η + (1 - δ) * h
 end
 
-function u_c_l(c::Float64, l::Float64, θ::Float64, γ::Float64, ε::Float64)
+function u_c_l(
+        c::Float32, l::Float32, θ::Float32, γ::Float32, ε::Float32
+    )::Float32
     u_c(c) = θ != 1 ? c^(1-θ)/(1-θ) : log(c)
     u_l(l) = ε != -1 ? (ε/(1 + ε)) * l^((1+ε)/ε) : log(l)
     return u_c(c) - γ * u_l(l)
 end
 
 function flow_value(
-        h::Float64, hp::Float64, a::Float64, ap::Float64, e::Int;
-        z::Float64, A::Float64, δ::Float64, α::Float64,
-        η::Float64, θ::Float64, γ::Float64, ε::Float64, r::Float64
-        )
+        h::Float32, hp::Float32, a::Float32, ap::Float32, e::Int;
+        z::Float32, A::Float32, δ::Float32, α::Float32,
+        η::Float32, θ::Float32, γ::Float32, ε::Float32, r::Float32
+    )::Float32
     s = calculate_s(h, hp, A, δ, α, η)
     l = calculate_l(e, s)
     c = calculate_c(z, h, e, s, a, ap, r)
     if c < 0 || s < 0 || s > 1
-        return -Inf
+        return -Inf32
     end
     return u_c_l(c, l, θ, γ, ε)
 end
 
-function calculate_emp_process(λ_f::Float64, λ_l::Float64)
+function calculate_emp_process(λ_f::Float32, λ_l::Float32)
     grid = [0, 1]
     trans = [1-λ_f λ_f; λ_l 1-λ_l]
     return (grid, trans)
@@ -60,11 +64,11 @@ end
 
 function make_flow_value_mat(
         flow_value::Function,
-        h_grid::Vector{Float64}, a_grid::Vector{Float64},
+        h_grid::Vector{Float32}, a_grid::Vector{Float32},
         e_grid::Vector{Int},
-        hp_grid::Vector{Float64}, ap_grid::Vector{Float64};
+        hp_grid::Vector{Float32}, ap_grid::Vector{Float32};
         kwargs...
-    )
+    )::Array{Float32, 5}
     h_N = length(h_grid)
     a_N = length(a_grid)
     e_N = length(e_grid)
@@ -73,7 +77,7 @@ function make_flow_value_mat(
 
     flow_value_spec(h, hp, a, ap, e) = flow_value(h, hp, a, ap, e; kwargs...)
 
-    flow_value_mat = Array{Float64}(undef, h_N, a_N, e_N, hp_N, ap_N)
+    flow_value_mat = Array{Float32}(undef, h_N, a_N, e_N, hp_N, ap_N)
     Threads.@threads for i_h ∈ 1:h_N
         for i_a ∈ 1:a_N, i_e ∈ 1:e_N, i_hp ∈ 1:hp_N, i_ap ∈ 1:ap_N
             flow_value_mat[i_h, i_a, i_e, i_hp, i_ap] = flow_value_spec(
@@ -86,19 +90,34 @@ function make_flow_value_mat(
 end
 
 function value_function(
-        flow_value_mat::Array{Float64},
-        V::Array{Float64},
-        trans_mat::Matrix{Float64},
+        flow_value_mat::Array{Float32},
+        V::Array{Float32},
+        trans_mat::Matrix{Float32},
         i_h::Int, i_a::Int, i_e::Int,
-        i_hp::Int, i_ap::Int, β::Float64
-    )
-    @views flow_val = flow_value_mat[i_h, i_a, i_e, i_hp, i_ap]
-    @views ECont = V[i_hp, i_ap, :] ⋅ trans_mat[i_e, :]
+        i_hp::Int, i_ap::Int, β::Float32
+    )::Float32
+    @views @inbounds flow_val = flow_value_mat[i_h, i_a, i_e, i_hp, i_ap]
+    @views @inbounds @fastmath ECont = V[i_hp, i_ap, :] ⋅ trans_mat[i_e, :]
     return flow_val + β * ECont
 end
 
-function max_V_ix(value_fn, V, i_h, i_a, i_e)
-    val::Float64 = -Inf
+function max_V_ix(value_fn::Function, V::Array{Float32}, i_h::Int, i_a::Int, i_e::Int)::Float32
+    val::Float32 = -Inf32
+    for i_hp ∈ 1:h_N, i_ap ∈ 1:a_N
+        @views candidate_val = value_fn(
+            V, i_h, i_a, i_e, i_hp, i_ap
+        )
+        if candidate_val > val
+            val = candidate_val
+        end
+    end
+    return val
+end
+
+function max_V_ix_final(
+        value_fn::Function, V::Array{Float32}, i_h::Int, i_a::Int, i_e::Int
+    )::Tuple{Float32, Int, Int}
+    val::Float32 = -Inf32
     val_i_hp::Int = 0
     val_i_ap::Int = 0
     for i_hp ∈ 1:h_N, i_ap ∈ 1:a_N
@@ -114,10 +133,64 @@ function max_V_ix(value_fn, V, i_h, i_a, i_e)
     return val, val_i_hp, val_i_ap
 end
 
+function update_val_mat!(
+        val_mat::Array{Float32}, V::Array{Float32}, value_fn::Function,
+        h_iterator::UnitRange{Int64}, a_iterator::UnitRange{Int64},
+        e_iterator::UnitRange{Int64}
+    )
+    Threads.@threads for i_h ∈ h_iterator
+        for i_a ∈ a_iterator, i_e ∈ e_iterator
+            val_mat[i_h, i_a, i_e] = max_V_ix(
+                value_fn, V, i_h, i_a, i_e
+            )
+        end
+    end
+end
+
+function get_val_arg_mats(
+        V::Array{Float32}, value_fn::Function, h_iterator::UnitRange{Int64},
+        a_iterator::UnitRange{Int64}, e_iterator::UnitRange{Int64}
+    )::Tuple{Array{Float32}, Array{Int}, Array{Int}}
+    val_mat = Array{Float32}(undef, h_N, a_N, e_N)
+    i_hp_mat = Array{Int}(undef, h_N, a_N, e_N)
+    i_ap_mat = Array{Int}(undef, h_N, a_N, e_N)
+    Threads.@threads for i_h ∈ h_iterator
+        for i_a ∈ a_iterator, i_e ∈ e_iterator
+            val, val_i_hp, val_i_ap = max_V_ix_final(
+                value_fn, V, i_h, i_a, i_e
+            )
+            val_mat[i_h, i_a, i_e] = val
+            i_hp_mat[i_h, i_a, i_e] = val_i_hp
+            i_ap_mat[i_h, i_a, i_e] = val_i_ap
+        end
+    end
+    return val_mat, i_hp_mat, i_ap_mat
+end
+
 function do_VFI(
-        flow_value::Function, h_grid::Vector{Float64}, a_grid::Vector{Float64},
-        e_grid::Vector{Int}, trans_mat::Matrix{Float64}, β::Float64;
-        tol::Float64=1e-6, max_iter::Int=1000, kwargs...
+        flow_value::Function, h_grid::Vector{Float32}, a_grid::Vector{Float32},
+        e_grid::Vector{Int}, trans_mat::Matrix{Float32}, β::Float32;
+        tol::Float32=1f-6, max_iter::Int=1000, kwargs...
+    )::Tuple{
+        Vector{Float32}, Vector{Float32}, Vector{Int}, Array{Float32},
+        Array{Float32}, Array{Float32}, Int
+    }
+    h_N = length(h_grid)
+    a_N = length(a_grid)
+    e_N = length(e_grid)
+
+    # Set up grids
+
+    V = zeros(Float32, h_N, a_N, e_N)
+
+    println("Making flow value matrix ...")
+
+    flow_value_mat = make_flow_value_mat(
+        flow_value, h_grid, a_grid, e_grid, h_grid, a_grid; kwargs...
+    )
+
+    value_fn_spec(V, i_h, i_a, i_e, i_hp, i_ap) = value_function(
+        flow_value_mat, V, trans_mat, i_h, i_a, i_e, i_hp, i_ap, β
     )
     h_N = length(h_grid)
     a_N = length(a_grid)
