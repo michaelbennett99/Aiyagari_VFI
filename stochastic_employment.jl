@@ -108,9 +108,10 @@ function max_V_ix(
         trans_mat::Matrix{Float32}, i_h::Int, i_a::Int, i_e::Int, β::Float32
     )::Float32
     val::Float32 = -Inf32
-    for i_hp ∈ 1:h_N, i_ap ∈ 1:a_N
+    valid_indices = findall(isfinite.(flow_value_mat[i_h, i_a, i_e, :, :]))
+    for i ∈ valid_indices
         @views candidate_val = value_function(
-            flow_value_mat, V, trans_mat, i_h, i_a, i_e, i_hp, i_ap, β
+            flow_value_mat, V, trans_mat, i_h, i_a, i_e, i[1], i[2], β
         )
         if candidate_val > val
             val = candidate_val
@@ -126,9 +127,10 @@ function max_V_ix_final(
     val::Float32 = -Inf32
     val_i_hp::Int = 0
     val_i_ap::Int = 0
-    for i_hp ∈ 1:h_N, i_ap ∈ 1:a_N
+    valid_indices = findall(isfinite.(flow_value_mat[i_h, i_a, i_e, :, :]))
+    for i ∈ valid_indices
         @views candidate_val = value_function(
-            flow_value_mat, V, trans_mat, i_h, i_a, i_e, i_hp, i_ap, β
+            flow_value_mat, V, trans_mat, i_h, i_a, i_e, i[1], i[2], β
         )
         if candidate_val > val
             val = candidate_val
