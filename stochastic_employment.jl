@@ -1,5 +1,7 @@
-using BellmanSolver, NumericalMethods, Distributions, LinearAlgebra
-using Interpolations, Optim
+using BellmanSolver, Distributions, LinearAlgebra
+using Interpolations, Optim, ForwardDiff
+
+include("NumericalMethods.jl")
 
 set_zero_subnormals(true)
 
@@ -170,7 +172,7 @@ end
 function do_VFI(
         flow_value::Function, h_grid::Vector{Float32}, a_grid::Vector{Float32},
         e_grid::Vector{Int}, trans_mat::Matrix{Float32}, β::Float32;
-        tol::Float32=1f-6, max_iter::Int=1000, kwargs...
+        tol::Float32=1f-3, max_iter::Int=1000, kwargs...
     )::Tuple{
         Vector{Float32}, Vector{Float32}, Vector{Int}, Array{Float32},
         Array{Float32}, Array{Float32}, Int
@@ -181,32 +183,13 @@ function do_VFI(
 
     # Set up grids
 
-    V = zeros(Float32, h_N, a_N, e_N)
-
     println("Making flow value matrix ...")
 
     flow_value_mat = make_flow_value_mat(
         flow_value, h_grid, a_grid, e_grid, h_grid, a_grid; kwargs...
     )
 
-    value_fn_spec(V, i_h, i_a, i_e, i_hp, i_ap) = value_function(
-        flow_value_mat, V, trans_mat, i_h, i_a, i_e, i_hp, i_ap, β
-    )
-    h_N = length(h_grid)
-    a_N = length(a_grid)
-    e_N = length(e_grid)
-
-    # Set up grids
-
-    V = zeros(h_N, a_N, e_N)
-    i_hp_mat = Array{Int}(undef, h_N, a_N, e_N)
-    i_ap_mat = Array{Int}(undef, h_N, a_N, e_N)
-
-    println("Making flow value matrix ...")
-
-    flow_value_mat = make_flow_value_mat(
-        flow_value, h_grid, a_grid, e_grid, h_grid, a_grid; kwargs...
-    )
+    V = maximum(flow_value_mat, dims=(4, 5))
 
     value_fn_spec(V, i_h, i_a, i_e, i_hp, i_ap) = value_function(
         flow_value_mat, V, trans_mat, i_h, i_a, i_e, i_hp, i_ap, β
@@ -216,19 +199,120 @@ function do_VFI(
 
     diff = 1
     iter = 0
+    val_mat = Array{Float32}(undef, h_N, a_N, e_N)
     while diff > tol && iter < max_iter
-        val_mat = Array{Float64}(undef, h_N, a_N, e_N)
-        Threads.@threads for i_h ∈ 1:h_N
-            for i_a ∈ 1:a_N, i_e ∈ 1:e_N
-                val::Float64 = -Inf
-                val, val_i_hp, val_i_ap = max_V_ix(
-                    value_fn_spec, V, i_h, i_a, i_e
-                )
-                val_mat[i_h, i_a, i_e] = val
-                i_hp_mat[i_h, i_a, i_e] = val_i_hp
-                i_ap_mat[i_h, i_a, i_e] = val_i_ap
+        update_val_mat!(val_mat, V, value_fn_spec, 1:h_N, 1:a_N, 1:e_N)
+        @fastmath diff = maximum(abs.(V - val_mat))
+        V = copy(val_mat)
+        if iter % 25 == 0
+            println("Iteration $iter. Diff = $diff.")
+        end
+        iter += 1
+    end
+    V, i_hp_mat, i_ap_mat = get_val_arg_mats(
+        V, value_fn_spec, 1:h_N, 1:a_N, 1:e_N
+    )
+    hp_mat = map(x -> h_grid[x], i_hp_mat)
+    ap_mat = map(x -> a_grid[x], i_ap_mat)
+    return h_grid, a_grid, e_grid, V, hp_mat, ap_mat, iter
+end
+
+function do_VFI_I(
+    flow_value::Function, h_grid::Vector{Float32}, a_grid::Vector{Float32},
+    e_grid::Vector{Int}, trans_mat::Matrix{Float32}, β::Float32;
+    tol::Float32=1f-3, max_iter::Int=1000, kwargs...
+)
+    h_N = length(h_grid)
+    a_N = length(a_grid)
+    e_N = length(e_grid)
+
+    i_h_grid = 1:h_N
+    i_a_grid = 1:a_N
+    i_e_grid = 1:e_N
+
+    # Set up grids
+
+    println("Making flow value matrix ...")
+
+    flow_value_mat = make_flow_value_mat(
+        flow_value, h_grid, a_grid, e_grid, h_grid, a_grid; kwargs...
+    )
+
+    V = maximum(flow_value_mat, dims=(4, 5))
+    hp_mat = Array{Float32}(undef, h_N, a_N, e_N)
+    ap_mat = Array{Float32}(undef, h_N, a_N, e_N)
+
+    value_fn_spec(V, i_h, i_a, i_e, i_hp, i_ap) = value_function(
+        flow_value_mat, V, trans_mat, i_h, i_a, i_e, i_hp, i_ap, β
+    )
+
+    println("Starting iteration ...")
+
+    odiff = 0
+    diff = 1
+    iter = 0
+    while diff > tol && iter < max_iter && odiff != diff
+        val_mat = Array{Float32}(undef, h_N, a_N, e_N)
+        Threads.@threads for i_h ∈ i_h_grid
+            for i_a ∈ i_a_grid, i_e ∈ i_e_grid
+                V_i = Matrix{Float32}(undef, h_N, a_N)
+                for i_hp ∈ i_h_grid, i_ap ∈ i_a_grid
+                    @views @inbounds V_i[i_hp, i_ap] = value_fn_spec(
+                        V, i_h, i_a, i_e, i_hp, i_ap
+                    )
+                end
+                col_sums = [sum(.!isinf.(V_i[:, i_ap])) for i_ap ∈ i_a_grid]
+                valid_cols = Bool.([y == maximum(col_sums) for y ∈ col_sums])
+                valid_rows = Bool.([.!all(isinf.(V_i[i_hp, valid_cols])) for i_hp ∈ i_h_grid])
+                if sum(valid_cols) == 1 && sum(valid_rows) == 1
+                    val_mat[i_h, i_a, i_e] = V_i[valid_rows, valid_cols][1, 1]
+                    hp_mat[i_h, i_a, i_e] = vec(h_grid[valid_rows])[1]
+                    ap_mat[i_h, i_a, i_e] = vec(a_grid[valid_cols])[1]
+                elseif sum(valid_cols) == 1
+                    f_V_i = vec(V_i[valid_rows, valid_cols])
+                    f_i = vec(h_grid[valid_rows])
+                    itp = interpolate(f_V_i, BSpline(Cubic(Line(OnGrid()))))
+                    V_i_fn = extrapolate(
+                        Interpolations.scale(itp, range(minimum(f_i), maximum(f_i), length(f_i))),
+                        Line()
+                    )
+                    obj = x -> -V_i_fn(x)
+                    max = optimize(obj, f_i[1], f_i[end])
+                    val_mat[i_h, i_a, i_e] = -Optim.minimum(max)
+                    hp_mat[i_h, i_a, i_e] = Optim.minimizer(max)
+                    ap_mat[i_h, i_a, i_e] = vec(a_grid[valid_cols])[1]
+                elseif sum(valid_rows) == 1
+                    f_V_i = vec(V_i[valid_rows, valid_cols])
+                    f_i = vec(a_grid[valid_cols])
+                    itp = interpolate(f_V_i, BSpline(Cubic(Line(OnGrid()))))
+                    V_i_fn = extrapolate(
+                        Interpolations.scale(itp, range(minimum(f_i), maximum(f_i), length(f_i))),
+                        Line()
+                    )
+                    obj = x -> -V_i_fn(x)
+                    max = optimize(obj, f_i[1], f_i[end])
+                    val_mat[i_h, i_a, i_e] = -Optim.minimum(max)
+                    hp_mat[i_h, i_a, i_e] = vec(h_grid[valid_rows])[1]
+                    ap_mat[i_h, i_a, i_e] = Optim.minimizer(max)
+                else
+                    f_V_i = V_i[valid_rows, valid_cols]
+                    f_i_h = h_grid[valid_rows]
+                    f_i_a = a_grid[valid_cols]
+                    itp = interpolate(f_V_i, BSpline(Cubic(Line(OnGrid()))))
+                    V_i_fn = extrapolate(Interpolations.scale(
+                        itp,
+                        range(minimum(f_i_h), maximum(f_i_h), length(f_i_h)),
+                        range(minimum(f_i_a), maximum(f_i_a), length(f_i_a))
+                    ), Interpolations.Flat())
+                    obj = x -> -V_i_fn(x[1], x[2])
+                    max = optimize(obj, [f_i_h[ceil(Int, sum(valid_rows)/2)], f_i_a[ceil(Int, sum(valid_cols)/2)]])
+                    val_mat[i_h, i_a, i_e] = -Optim.minimum(max)
+                    hp_mat[i_h, i_a, i_e] = Optim.minimizer(max)[1]
+                    ap_mat[i_h, i_a, i_e] = Optim.minimizer(max)[2]
+                end
             end
         end
+        odiff = copy(diff)
         diff = maximum(abs.(V - val_mat))
         V = val_mat
         if iter % 25 == 0
