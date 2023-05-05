@@ -219,6 +219,10 @@ function do_VFI(
     return h_grid, a_grid, e_grid, V, hp_mat, ap_mat, iter
 end
 
+
+
+### STASHED IRRELEVANT CODE ###
+
 function get_valid_subarray(array::AbstractMatrix)
     col_sums = [sum(.!isinf.(array[:, j])) for j ∈ axes(array, 2)]
     valid_cols = Bool.([y == maximum(col_sums) for y ∈ col_sums])
@@ -317,9 +321,17 @@ function do_VFI_I(
                         itp,
                         range(minimum(f_i_h), maximum(f_i_h), length(f_i_h)),
                         range(minimum(f_i_a), maximum(f_i_a), length(f_i_a))
-                    ), Interpolations.Flat())
+                    ), Interpolations.Line())
                     obj = x -> -V_i_fn(x[1], x[2])
-                    max = optimize(obj, [f_i_h[ceil(Int, sum(valid_rows)/2)], f_i_a[ceil(Int, sum(valid_cols)/2)]])
+                    lower = [f_i_h[1], f_i_a[1]]
+                    upper = [f_i_h[end], f_i_a[end]]
+                    initial_x = [
+                        f_i_h[ceil(Int, sum(valid_rows)/2)],
+                        f_i_a[ceil(Int, sum(valid_cols)/2)]
+                    ]
+                    max = optimize(
+                        obj, lower, upper, initial_x, Fminbox(GradientDescent())
+                    )
                     val_mat[i_h, i_a, i_e] = -Optim.minimum(max)
                     hp_mat[i_h, i_a, i_e] = Optim.minimizer(max)[1]
                     ap_mat[i_h, i_a, i_e] = Optim.minimizer(max)[2]
