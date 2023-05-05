@@ -103,7 +103,9 @@ function value_function(
     return flow_val + β * ECont
 end
 
-function max_V_ix(value_fn::Function, V::Array{Float32}, i_h::Int, i_a::Int, i_e::Int)::Float32
+function max_V_ix(
+        value_fn::Function, V::Array{Float32}, i_h::Int, i_a::Int, i_e::Int
+    )::Float32
     val::Float32 = -Inf32
     for i_hp ∈ 1:h_N, i_ap ∈ 1:a_N
         @views candidate_val = value_fn(
@@ -217,11 +219,20 @@ function do_VFI(
     return h_grid, a_grid, e_grid, V, hp_mat, ap_mat, iter
 end
 
+function get_valid_subarray(array::AbstractMatrix)
+    col_sums = [sum(.!isinf.(array[:, j])) for j ∈ axes(array, 2)]
+    valid_cols = Bool.([y == maximum(col_sums) for y ∈ col_sums])
+    valid_rows = Bool.(
+        [.!all(isinf.(array[j, valid_cols])) for j ∈ axes(array, 1)]
+    )
+    return valid_rows, valid_cols
+end
+
 function do_VFI_I(
-    flow_value::Function, h_grid::Vector{Float32}, a_grid::Vector{Float32},
-    e_grid::Vector{Int}, trans_mat::Matrix{Float32}, β::Float32;
-    tol::Float32=1f-3, max_iter::Int=1000, kwargs...
-)
+        flow_value::Function, h_grid::Vector{Float32}, a_grid::Vector{Float32},
+        e_grid::Vector{Int}, trans_mat::Matrix{Float32}, β::Float32;
+        tol::Float32=1f-3, max_iter::Int=1000, kwargs...
+    )
     h_N = length(h_grid)
     a_N = length(a_grid)
     e_N = length(e_grid)
@@ -237,6 +248,8 @@ function do_VFI_I(
     flow_value_mat = make_flow_value_mat(
         flow_value, h_grid, a_grid, e_grid, h_grid, a_grid; kwargs...
     )
+
+    # Set up guess for value function
 
     V = maximum(flow_value_mat, dims=(4, 5))
     hp_mat = Array{Float32}(undef, h_N, a_N, e_N)
@@ -261,9 +274,7 @@ function do_VFI_I(
                         V, i_h, i_a, i_e, i_hp, i_ap
                     )
                 end
-                col_sums = [sum(.!isinf.(V_i[:, i_ap])) for i_ap ∈ i_a_grid]
-                valid_cols = Bool.([y == maximum(col_sums) for y ∈ col_sums])
-                valid_rows = Bool.([.!all(isinf.(V_i[i_hp, valid_cols])) for i_hp ∈ i_h_grid])
+                valid_rows, valid_cols = get_valid_subarray(V_i)
                 if sum(valid_cols) == 1 && sum(valid_rows) == 1
                     val_mat[i_h, i_a, i_e] = V_i[valid_rows, valid_cols][1, 1]
                     hp_mat[i_h, i_a, i_e] = vec(h_grid[valid_rows])[1]
@@ -273,7 +284,9 @@ function do_VFI_I(
                     f_i = vec(h_grid[valid_rows])
                     itp = interpolate(f_V_i, BSpline(Cubic(Line(OnGrid()))))
                     V_i_fn = extrapolate(
-                        Interpolations.scale(itp, range(minimum(f_i), maximum(f_i), length(f_i))),
+                        Interpolations.scale(
+                            itp,
+                            range(minimum(f_i), maximum(f_i), length(f_i))),
                         Line()
                     )
                     obj = x -> -V_i_fn(x)
@@ -286,7 +299,8 @@ function do_VFI_I(
                     f_i = vec(a_grid[valid_cols])
                     itp = interpolate(f_V_i, BSpline(Cubic(Line(OnGrid()))))
                     V_i_fn = extrapolate(
-                        Interpolations.scale(itp, range(minimum(f_i), maximum(f_i), length(f_i))),
+                        Interpolations.scale(
+                            itp, range(minimum(f_i), maximum(f_i), length(f_i))),
                         Line()
                     )
                     obj = x -> -V_i_fn(x)
