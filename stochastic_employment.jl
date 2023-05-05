@@ -104,12 +104,13 @@ function value_function(
 end
 
 function max_V_ix(
-        value_fn::Function, V::Array{Float32}, i_h::Int, i_a::Int, i_e::Int
+        flow_value_mat::Array{Float32}, V::Array{Float32},
+        trans_mat::Matrix{Float32}, i_h::Int, i_a::Int, i_e::Int, β::Float32
     )::Float32
     val::Float32 = -Inf32
     for i_hp ∈ 1:h_N, i_ap ∈ 1:a_N
-        @views candidate_val = value_fn(
-            V, i_h, i_a, i_e, i_hp, i_ap
+        @views candidate_val = value_function(
+            flow_value_mat, V, trans_mat, i_h, i_a, i_e, i_hp, i_ap, β
         )
         if candidate_val > val
             val = candidate_val
@@ -119,14 +120,15 @@ function max_V_ix(
 end
 
 function max_V_ix_final(
-        value_fn::Function, V::Array{Float32}, i_h::Int, i_a::Int, i_e::Int
+        flow_value_mat::Array{Float32}, V::Array{Float32},
+        trans_mat::Matrix{Float32}, i_h::Int, i_a::Int, i_e::Int, β::Float32
     )::Tuple{Float32, Int, Int}
     val::Float32 = -Inf32
     val_i_hp::Int = 0
     val_i_ap::Int = 0
     for i_hp ∈ 1:h_N, i_ap ∈ 1:a_N
-        @views candidate_val = value_fn(
-            V, i_h, i_a, i_e, i_hp, i_ap
+        @views candidate_val = value_function(
+            flow_value_mat, V, trans_mat, i_h, i_a, i_e, i_hp, i_ap, β
         )
         if candidate_val > val
             val = candidate_val
@@ -138,22 +140,24 @@ function max_V_ix_final(
 end
 
 function update_val_mat!(
-        val_mat::Array{Float32}, V::Array{Float32}, value_fn::Function,
+        val_mat::Array{Float32}, flow_value_mat::Array{Float32},
+        V::Array{Float32}, trans_mat::Matrix{Float32},
         h_iterator::UnitRange{Int64}, a_iterator::UnitRange{Int64},
-        e_iterator::UnitRange{Int64}
+        e_iterator::UnitRange{Int64}, β::Float32
     )
     Threads.@threads for i_h ∈ h_iterator
         for i_a ∈ a_iterator, i_e ∈ e_iterator
             val_mat[i_h, i_a, i_e] = max_V_ix(
-                value_fn, V, i_h, i_a, i_e
+                flow_value_mat, V, trans_mat, i_h, i_a, i_e, β
             )
         end
     end
 end
 
 function get_val_arg_mats(
-        V::Array{Float32}, value_fn::Function, h_iterator::UnitRange{Int64},
-        a_iterator::UnitRange{Int64}, e_iterator::UnitRange{Int64}
+        flow_value_mat::Array{Float32}, V::Array{Float32},
+        trans_mat::Matrix{Float32}, h_iterator::UnitRange{Int64},
+        a_iterator::UnitRange{Int64}, e_iterator::UnitRange{Int64}, β::Float32
     )::Tuple{Array{Float32}, Array{Int}, Array{Int}}
     val_mat = Array{Float32}(undef, h_N, a_N, e_N)
     i_hp_mat = Array{Int}(undef, h_N, a_N, e_N)
@@ -161,7 +165,7 @@ function get_val_arg_mats(
     Threads.@threads for i_h ∈ h_iterator
         for i_a ∈ a_iterator, i_e ∈ e_iterator
             val, val_i_hp, val_i_ap = max_V_ix_final(
-                value_fn, V, i_h, i_a, i_e
+                flow_value_mat, V, trans_mat, i_h, i_a, i_e, β
             )
             val_mat[i_h, i_a, i_e] = val
             i_hp_mat[i_h, i_a, i_e] = val_i_hp
@@ -193,17 +197,15 @@ function do_VFI(
 
     V = maximum(flow_value_mat, dims=(4, 5))
 
-    value_fn_spec(V, i_h, i_a, i_e, i_hp, i_ap) = value_function(
-        flow_value_mat, V, trans_mat, i_h, i_a, i_e, i_hp, i_ap, β
-    )
-
     println("Starting iteration ...")
 
     diff = 1
     iter = 0
     val_mat = Array{Float32}(undef, h_N, a_N, e_N)
     while diff > tol && iter < max_iter
-        update_val_mat!(val_mat, V, value_fn_spec, 1:h_N, 1:a_N, 1:e_N)
+        update_val_mat!(
+            val_mat, flow_value_mat, V, trans_mat, 1:h_N, 1:a_N, 1:e_N, β
+        )
         @fastmath diff = maximum(abs.(V - val_mat))
         V = copy(val_mat)
         if iter % 25 == 0
@@ -212,7 +214,7 @@ function do_VFI(
         iter += 1
     end
     V, i_hp_mat, i_ap_mat = get_val_arg_mats(
-        V, value_fn_spec, 1:h_N, 1:a_N, 1:e_N
+        flow_value_mat, V, trans_mat, 1:h_N, 1:a_N, 1:e_N, β
     )
     hp_mat = map(x -> h_grid[x], i_hp_mat)
     ap_mat = map(x -> a_grid[x], i_ap_mat)
