@@ -37,8 +37,9 @@ function make_3d_plot(
         outcome_plots, layout
     )
 
-    touch("$out.html")
-    open("$out.html", "w") do io
+    filename = joinpath(@__DIR__, "plots", "$out.html")
+    touch(filename)
+    open(filename, "w") do io
         PlotlyBase.to_html(io, p.plot)
     end
     return p
