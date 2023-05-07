@@ -28,7 +28,7 @@ function make_3d_plot(
             outcome_plots,
             surface(
                 x=h_grid, y=a_grid, z=zeros(size(outcome_mats[1])),
-                name="Zero", colorscale="Greys", showscale=false
+                name="Zero", colorscale="Greys", showscale=false, opacity=0.5
             )
         )    
     end
