@@ -23,12 +23,51 @@ function calculate_s(
     return ((hp - (1-δ)*h)/(A*h^η))^(1/α)
 end
 
+function calculate_s(
+        h::Vector{Float32}, hp::Array{Float32}, A::Float32,
+        δ::Float32, α::Float32, η::Float32, h_axis::Int
+    )::Array{Float32}
+    s = similar(hp)
+    for idx ∈ CartesianIndices(hp)
+        s[idx] = calculate_s(
+            h[idx.I[h_axis]], hp[idx], A, δ, α, η
+        )
+    end
+    return s
+end
+
 function calculate_c(
         z::Float32, h::Float32, e::Int64,
         s::Float32, a::Float32, ap::Float32, r::Float32
     )
-    return z + (h - z) * e * (1-s) + (1+r) * a - ap
+    return z + ((h - z)*e*(1-s)) + ((1+r)*a) - ap
 end
+
+function calculate_c(
+        z::Float32, h::Vector{Float32}, e::Vector{Int64},
+        s::Array{Float32}, a::Vector{Float32}, ap::Array{Float32}, r::Float32,
+        h_axis::Int=1, a_axis::Int=2, e_axis::Int=3
+    )
+    c = similar(ap)
+    for idx ∈ CartesianIndices(ap)
+        c[idx] = calculate_c(
+            z, h[idx.I[h_axis]], e[idx.I[e_axis]],
+            s[idx], a[idx.I[a_axis]], ap[idx], r
+        )
+    end
+    return c
+end
+
+function calculate_saving(
+        a_grid::Vector{Float32}, ap::Array{Float32}, a_axis::Int=2
+    )
+    sav = similar(ap)
+    for idx ∈ CartesianIndices(ap)
+        sav[idx] = ap[idx] - a_grid[idx.I[2]]
+    end
+    return sav
+end
+
 
 function calculate_h(
         s::Float32, h::Float32, A::Float32, η::Float32, δ::Float32, α::Float32
