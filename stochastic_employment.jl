@@ -1,4 +1,4 @@
-using BellmanSolver, Distributions, LinearAlgebra
+using BellmanSolver, Distributions, LinearAlgebra, Statistics
 using Interpolations, Optim, ForwardDiff
 
 include("NumericalMethods.jl")
@@ -103,7 +103,7 @@ function value_function(
     return flow_val + β * ECont
 end
 
-function max_V_ix(
+@inbounds function max_V_ix(
         flow_value_mat::Array{Float32}, V::Array{Float32},
         trans_mat::Matrix{Float32}, i_h::Int, i_a::Int, i_e::Int, β::Float32
     )::Float32
@@ -120,7 +120,7 @@ function max_V_ix(
     return val
 end
 
-function max_V_ix_final(
+@inbounds function max_V_ix_final(
         flow_value_mat::Array{Float32}, V::Array{Float32},
         trans_mat::Matrix{Float32}, i_h::Int, i_a::Int, i_e::Int, β::Float32
     )::Tuple{Float32, Int, Int}
@@ -134,8 +134,8 @@ function max_V_ix_final(
         )
         if candidate_val > val
             val = candidate_val
-            val_i_hp = i_hp
-            val_i_ap = i_ap
+            val_i_hp = i[1]
+            val_i_ap = i[2]
         end
     end
     return val, val_i_hp, val_i_ap
@@ -223,6 +223,106 @@ function do_VFI(
     return h_grid, a_grid, e_grid, V, hp_mat, ap_mat, iter
 end
 
+function valid_initial_policy!(
+        policy::Array{Int}, flow_value_mat::Array{Float32}
+    )
+    Threads.@threads for idx ∈ CartesianIndices(size(policy)[1:end-1])
+        nonnull = findfirst(isfinite.(flow_value_mat[idx.I..., :, :]))
+        policy[idx.I..., :] = [nonnull[1], nonnull[2]]
+    end
+end
+
+function evaluate_policy!(
+        val_mat::Array{Float32}, policy::Array{Int},
+        flow_value_mat::Array{Float32}, V::Array{Float32},
+        trans_mat::Matrix{Float32}, β::Float32
+    )
+    Threads.@threads for idx ∈ CartesianIndices(val_mat)
+        val_mat[idx] = value_function(
+            flow_value_mat, V, trans_mat, idx.I..., policy[idx, :]..., β
+        )
+    end
+end
+
+function argmax_V(
+        flow_value_mat::Array{Float32}, V::Array{Float32},
+        trans_mat::Matrix{Float32}, i_h::Int, i_a::Int, i_e::Int, β::Float32
+    )
+    val::Float32 = -Inf32
+    hp::Int = 0
+    ap::Int = 0
+    valid_indices = findall(isfinite.(flow_value_mat[i_h, i_a, i_e, :, :]))
+    for i ∈ valid_indices
+        @views candidate_val = value_function(
+            flow_value_mat, V, trans_mat, i_h, i_a, i_e, i[1], i[2], β
+        )
+        if candidate_val > val
+            hp = i[1]
+            ap = i[2]
+        end
+    end
+    return [hp, ap]
+end
+
+function improve_policy!(
+        policy::Array{Int}, flow_value_mat::Array{Float32},
+        V::Array{Float32}, trans_mat::Array{Float32}, β::Float32
+    )
+    Threads.@threads for idx ∈ CartesianIndices(size(policy)[1:end-1])
+        policy[idx.I..., :] = argmax_V(
+            flow_value_mat, V, trans_mat, idx.I..., β
+        )
+    end
+end
+
+
+function do_PFI(
+        flow_value::Function, h_grid::Vector{Float32}, a_grid::Vector{Float32},
+        e_grid::Vector{Int64}, trans_mat::Matrix{Float32}, β::Float32;
+        tol::Float32=1f-3, max_iter::Int=1000, kwargs...
+    )
+    h_N = length(h_grid)
+    a_N = length(a_grid)
+    e_N = length(e_grid)
+
+    println("Making flow value matrix ...")
+
+    flow_value_mat = make_flow_value_mat(
+        flow_value, h_grid, a_grid, e_grid, h_grid, a_grid; kwargs...
+    )
+
+    println("Setting up initial guesses...")
+
+    V = zeros(Float32, h_N, a_N, e_N)
+    V = maximum(flow_value_mat, dims=(4, 5))
+    policy = Array{Int}(undef, h_N, a_N, e_N, 2)
+    valid_initial_policy!(policy, flow_value_mat)
+
+    println("Starting iteration ...")
+    
+    diff = 1
+    iter = 0
+    new_pol = Array{Int}(undef, h_N, a_N, e_N, 2)
+    while diff > 0 && iter < max_iter
+        val_mat = Array{Float32}(undef, h_N, a_N, e_N)
+        for _ ∈ 1:10
+            evaluate_policy!(val_mat, policy, flow_value_mat, V, trans_mat, β)
+            @fastmath inner_diff = maximum(abs.(V - val_mat))
+            V = copy(val_mat)
+        end
+        improve_policy!(new_pol, flow_value_mat, V, trans_mat, β)
+        @fastmath diff = maximum(abs.(policy - new_pol))
+        policy = copy(new_pol)
+        iter += 1
+        if iter % 1 == 0
+            println("Iteration $iter. Diff = $diff.")
+        end
+    end
+    evaluate_policy!(V, policy, flow_value_mat, V, trans_mat, β)
+    hp_mat = map(x -> h_grid[x], policy[:, :, :, 1])
+    ap_mat = map(x -> a_grid[x], policy[:, :, :, 2])
+    return h_grid, a_grid, e_grid, V, hp_mat, ap_mat, iter
+end
 
 
 ### STASHED IRRELEVANT CODE ###
