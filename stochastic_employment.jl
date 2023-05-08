@@ -1,5 +1,5 @@
 using BellmanSolver, Distributions, LinearAlgebra, Statistics
-using Interpolations, Optim, ForwardDiff
+using Interpolations, Optim, ForwardDiff, Dates
 
 include("NumericalMethods.jl")
 
@@ -224,6 +224,7 @@ function do_VFI(
         Vector{Float32}, Vector{Float32}, Vector{Int}, Array{Float32},
         Array{Float32}, Array{Float32}, Int
     }
+    start = Dates.now()
     h_N = length(h_grid)
     a_N = length(a_grid)
     e_N = length(e_grid)
@@ -250,7 +251,9 @@ function do_VFI(
         @fastmath diff = maximum(abs.(V - val_mat))
         V = copy(val_mat)
         if iter % 25 == 0
-            println("Iteration $iter. Diff = $diff.")
+            time = Dates.format(
+                convert(DateTime, Dates.now()-start), "HH:MM:SS")
+            println("Iteration $iter. Diff = $diff. Time elapsed = $time.")
         end
         iter += 1
     end
