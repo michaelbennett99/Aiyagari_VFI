@@ -56,7 +56,7 @@ end
 
 function simulate_population(
         a_grid, h_grid, hp, ap, trans_mat; 
-        N=1000, T=100, a_0 = 0f0, h_0 = 0f0
+        N=1000, T=100, a_0 = 0f0, h_0 = 1f0
     )
     time_paths = Vector{TimePath}(undef, N)
     Threads.@threads for i ∈ 1:N
@@ -86,8 +86,8 @@ function make_density_plot(population::Population, t::Int)
             yaxis = "y",
             mode = "markers",
             marker = attr(
-                color = "rgba(0,0,0,0.3)",
-                size = 3
+                color = "rgba(0,0,0,0.1)",
+                size = 1
             )
         )
     trace3 = histogram(
