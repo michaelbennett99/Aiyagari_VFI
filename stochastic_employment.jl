@@ -265,6 +265,8 @@ function do_VFI(
     return h_grid, a_grid, e_grid, V, hp_mat, ap_mat, iter
 end
 
+### STASHED IRRELEVANT CODE ###################################################
+
 function valid_initial_policy!(
         policy::Array{Int}, flow_value_mat::Array{Float32}
     )
@@ -365,9 +367,6 @@ function do_PFI(
     ap_mat = map(x -> a_grid[x], policy[:, :, :, 2])
     return h_grid, a_grid, e_grid, V, hp_mat, ap_mat, iter
 end
-
-
-### STASHED IRRELEVANT CODE ###
 
 function get_valid_subarray(array::AbstractMatrix)
     col_sums = [sum(.!isinf.(array[:, j])) for j ∈ axes(array, 2)]
