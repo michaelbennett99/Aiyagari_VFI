@@ -55,7 +55,7 @@ function simulate_time_path(
 end
 
 function simulate_population(
-        a_grid, h_grid, hp, ap, trans_mat; 
+        a_grid, h_grid, hp, ap, trans_mat;
         N=1000, T=100, a_0 = 0f0, h_0 = 1f0
     )
     time_paths = Vector{TimePath}(undef, N)
