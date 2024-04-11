@@ -41,6 +41,10 @@ if !isinteractive()
         δ=δ, α=α, η=η, A=A, γ=γ, θ=θ, ε=ε, z=z, r=r, tol=1f-6
     )
 
+    if !isdir("results")
+        mkdir("results")
+    end
+    touch("results/VFI_results.jls")
     open(joinpath(@__DIR__, "results", "VFI_results.jls"), "w") do io
         serialize(io, results)
     end
