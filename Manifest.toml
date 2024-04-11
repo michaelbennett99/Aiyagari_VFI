@@ -2,7 +2,7 @@
 
 julia_version = "1.10.2"
 manifest_format = "2.0"
-project_hash = "88c5245a31940105ec444d01d0676c93842a7ba0"
+project_hash = "891012f0dd85f5b031c028c85a3c3d4d5d71aeb4"
 
 [[deps.Adapt]]
 deps = ["LinearAlgebra", "Requires"]
@@ -487,6 +487,14 @@ version = "1.0.2"
 uuid = "ca575930-c2e3-43a9-ace4-1e988b2c1908"
 version = "1.2.0"
 
+[[deps.NumericalMethods]]
+deps = ["ForwardDiff", "LinearAlgebra", "StaticArrays", "Test", "TestItemRunner", "TestItems"]
+git-tree-sha1 = "e4c45713f0c1ded3b4c62c2708a6e7d80b076bfc"
+repo-rev = "main"
+repo-url = "https://github.com/michaelbennett99/NumericalMethods.jl"
+uuid = "fd3c36b2-d619-4b64-906f-73477278ed8e"
+version = "0.1.0"
+
 [[deps.Observables]]
 git-tree-sha1 = "7438a59546cf62428fc9d1bc94729146d37a7225"
 uuid = "510215fc-4207-5dde-b226-833fc4488ee2"
@@ -796,6 +804,17 @@ version = "0.1.1"
 [[deps.Test]]
 deps = ["InteractiveUtils", "Logging", "Random", "Serialization"]
 uuid = "8dfed614-e22c-5e08-85e1-65c5234f0b40"
+
+[[deps.TestItemRunner]]
+deps = ["Pkg", "TOML", "Test", "TestItems", "UUIDs"]
+git-tree-sha1 = "cb2b53fd36a8fe20c0b9f55da6244eb4818779f5"
+uuid = "f8b46487-2199-4994-9208-9a1283c18c0a"
+version = "0.2.3"
+
+[[deps.TestItems]]
+git-tree-sha1 = "8621ba2637b49748e2dc43ba3d84340be2938022"
+uuid = "1c621080-faea-4a02-84b6-bbd5e436b8fe"
+version = "0.1.1"
 
 [[deps.URIParser]]
 deps = ["Unicode"]
