@@ -343,7 +343,7 @@ function do_PFI(
     valid_initial_policy!(policy, flow_value_mat)
 
     println("Starting iteration ...")
-    
+
     diff = 1
     iter = 0
     new_pol = Array{Int}(undef, h_N, a_N, e_N, 2)
