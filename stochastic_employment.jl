@@ -1,9 +1,4 @@
-using Distributions
 using LinearAlgebra
-using Statistics
-using Interpolations
-using Optim
-using ForwardDiff
 using Dates
 
 set_zero_subnormals(true)
@@ -66,7 +61,7 @@ function calculate_saving(
     )
     sav = similar(ap)
     for idx ∈ CartesianIndices(ap)
-        sav[idx] = ap[idx] - a_grid[idx.I[2]]
+        sav[idx] = ap[idx] - a_grid[idx.I[a_axis]]
     end
     return sav
 end
@@ -108,9 +103,11 @@ end
 
 function make_flow_value_mat(
         flow_value::Function,
-        h_grid::Vector{Float32}, a_grid::Vector{Float32},
+        h_grid::Vector{Float32},
+        a_grid::Vector{Float32},
         e_grid::Vector{Int},
-        hp_grid::Vector{Float32}, ap_grid::Vector{Float32};
+        hp_grid::Vector{Float32},
+        ap_grid::Vector{Float32};
         kwargs...
     )::Array{Float32, 5}
     h_N = length(h_grid)
@@ -146,8 +143,10 @@ function value_function(
 end
 
 @inbounds function max_V_ix(
-        flow_value_mat::Array{Float32}, V::Array{Float32},
-        trans_mat::Matrix{Float32}, i_h::Int, i_a::Int, i_e::Int, β::Float32
+        flow_value_mat::Array{Float32},
+        V::Array{Float32},
+        trans_mat::Matrix{Float32},
+        i_h::Int, i_a::Int, i_e::Int, β::Float32
     )::Float32
     val::Float32 = -Inf32
     valid_indices = findall(isfinite.(flow_value_mat[i_h, i_a, i_e, :, :]))
@@ -163,8 +162,10 @@ end
 end
 
 @inbounds function max_V_ix_final(
-        flow_value_mat::Array{Float32}, V::Array{Float32},
-        trans_mat::Matrix{Float32}, i_h::Int, i_a::Int, i_e::Int, β::Float32
+        flow_value_mat::Array{Float32},
+        V::Array{Float32},
+        trans_mat::Matrix{Float32},
+        i_h::Int, i_a::Int, i_e::Int, β::Float32
     )::Tuple{Float32, Int, Int}
     val::Float32 = -Inf32
     val_i_hp::Int = 0
@@ -184,10 +185,14 @@ end
 end
 
 function update_val_mat!(
-        val_mat::Array{Float32}, flow_value_mat::Array{Float32},
-        V::Array{Float32}, trans_mat::Matrix{Float32},
-        h_iterator::UnitRange{Int64}, a_iterator::UnitRange{Int64},
-        e_iterator::UnitRange{Int64}, β::Float32
+        val_mat::Array{Float32},
+        flow_value_mat::Array{Float32},
+        V::Array{Float32},
+        trans_mat::Matrix{Float32},
+        h_iterator::UnitRange{Int64},
+        a_iterator::UnitRange{Int64},
+        e_iterator::UnitRange{Int64},
+        β::Float32
     )
     Threads.@threads for i_h ∈ h_iterator
         for i_a ∈ a_iterator, i_e ∈ e_iterator
@@ -199,13 +204,19 @@ function update_val_mat!(
 end
 
 function get_val_arg_mats(
-        flow_value_mat::Array{Float32}, V::Array{Float32},
-        trans_mat::Matrix{Float32}, h_iterator::UnitRange{Int64},
-        a_iterator::UnitRange{Int64}, e_iterator::UnitRange{Int64}, β::Float32
+        flow_value_mat::Array{Float32},
+        V::Array{Float32},
+        trans_mat::Matrix{Float32},
+        h_iterator::UnitRange{Int64},
+        a_iterator::UnitRange{Int64},
+        e_iterator::UnitRange{Int64},
+        β::Float32
     )::Tuple{Array{Float32}, Array{Int}, Array{Int}}
+
     val_mat = Array{Float32}(undef, h_N, a_N, e_N)
     i_hp_mat = Array{Int}(undef, h_N, a_N, e_N)
     i_ap_mat = Array{Int}(undef, h_N, a_N, e_N)
+
     Threads.@threads for i_h ∈ h_iterator
         for i_a ∈ a_iterator, i_e ∈ e_iterator
             val, val_i_hp, val_i_ap = max_V_ix_final(
