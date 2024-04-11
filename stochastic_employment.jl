@@ -6,8 +6,6 @@ using Optim
 using ForwardDiff
 using Dates
 
-using BellmanSolver
-
 set_zero_subnormals(true)
 
 """
