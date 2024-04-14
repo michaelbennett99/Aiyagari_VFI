@@ -74,8 +74,8 @@ function make_density_plot(population::Population, t::Int)
     trace1 = histogram2dcontour(
             x = x,
             y = y,
-            colorscale = "Blues",
-            reversescale = true,
+            colorscale = [[0, "rgb(255,255,255)"], [1, "rgb(0,0,255)"]],
+            reversescale = false,
             xaxis = "x",
             yaxis = "y"
         )
@@ -108,11 +108,13 @@ function make_density_plot(population::Population, t::Int)
     layout = Layout(
         autosize = false,
         xaxis = attr(
+            range = [-10, 1],
             zeroline = false,
             domain = [0,0.85],
             showgrid = false
         ),
         yaxis = attr(
+            range = [0, 8],
             zeroline = false,
             domain = [0,0.85],
             showgrid = false
@@ -120,13 +122,17 @@ function make_density_plot(population::Population, t::Int)
         xaxis2 = attr(
             zeroline = false,
             domain = [0.85,1],
-            showgrid = false
+            showgrid = false,
+            showticklabels = false
         ),
         yaxis2 = attr(
             zeroline = false,
             domain = [0.85,1],
-            showgrid = false
+            showgrid = false,
+            showticklabels = false
         ),
+        paper_bgcolor = "white",
+        plot_bgcolor = "white",
         height = 600,
         width = 600,
         bargap = 0,
@@ -138,10 +144,10 @@ function make_density_plot(population::Population, t::Int)
 
     p = plot([trace1, trace2, trace3, trace4], layout)
 
-    svgfile = joinpath(@__DIR__, "plots", "density_plot/$t.svg")
+    svgfile = joinpath(@__DIR__, "plots", "density_plot/$t.png")
     touch(svgfile)
     open(svgfile, "w") do io
-        savefig(io, p.plot, format="svg")
+        savefig(io, p.plot, format="png")
     end
     return p
 end
