@@ -138,10 +138,10 @@ function make_density_plot(population::Population, t::Int)
 
     p = plot([trace1, trace2, trace3, trace4], layout)
 
-    svgfile = joinpath(@__DIR__, "plots", "density_plot/$t.pdf")
+    svgfile = joinpath(@__DIR__, "plots", "density_plot/$t.svg")
     touch(svgfile)
     open(svgfile, "w") do io
-        savefig(io, p.plot, format="pdf")
+        savefig(io, p.plot, format="svg")
     end
     return p
 end
